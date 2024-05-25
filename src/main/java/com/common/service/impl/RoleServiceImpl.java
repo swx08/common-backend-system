@@ -2,6 +2,7 @@ package com.common.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.common.model.dto.SearchRoleDto;
 import com.common.model.entity.Role;
 import com.common.service.IRoleService;
 import lombok.RequiredArgsConstructor;
@@ -35,14 +36,12 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
     private final RoleMenuMapper roleMenuMapper;
 
     @Override
-    public Map<String, Object> queryRoleListByPage(Integer pageNo, Integer pageSize, String roleName) {
+    public Map<String, Object> queryRoleListByPage(Integer pageNo, Integer pageSize, SearchRoleDto roleDto) {
         Page<Role> pageInfo = new Page<Role>(pageNo, pageSize);
-        String trimRoleName = "";
-        if(!StringUtils.isBlank(roleName)){
-            trimRoleName = roleName.trim();
-        }
         QueryWrapper<Role> wrapper = new QueryWrapper<>();
-        wrapper.eq(!StringUtils.isBlank(trimRoleName),"role_name",trimRoleName);
+        wrapper.like(StringUtils.isNotBlank(roleDto.getName()),"name",roleDto.getName().trim());
+        wrapper.like(StringUtils.isNotBlank(roleDto.getCode()),"code",roleDto.getCode().trim());
+        wrapper.eq(null != roleDto.getStatus(),"status",roleDto.getStatus());
         Page<Role> userPage = baseMapper.selectPage(pageInfo, wrapper);
         if(userPage != null){
             List<Role> userList = userPage.getRecords();

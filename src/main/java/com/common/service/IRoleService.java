@@ -1,5 +1,6 @@
 package com.common.service;
 
+import com.common.model.dto.SearchRoleDto;
 import com.common.model.entity.Role;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -23,7 +24,7 @@ public interface IRoleService extends IService<Role> {
      * @param roleName
      * @return
      */
-    Map<String, Object> queryRoleListByPage(Integer pageNo, Integer pageSize, String roleName);
+    Map<String, Object> queryRoleListByPage(Integer pageNo, Integer pageSize, SearchRoleDto roleDto);
 
     /**
      * 查询所有角色数据

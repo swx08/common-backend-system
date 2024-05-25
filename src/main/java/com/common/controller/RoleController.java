@@ -1,6 +1,7 @@
 package com.common.controller;
 
 
+import com.common.model.dto.SearchRoleDto;
 import com.common.model.entity.Role;
 import com.common.response.ResultData;
 import lombok.RequiredArgsConstructor;
@@ -36,8 +37,8 @@ public class RoleController {
     @GetMapping("/list/{pageNo}/{pageSize}")
     public ResultData queryRoleListByPage(@PathVariable("pageNo") Integer pageNo,
                                           @PathVariable("pageSize") Integer pageSize,
-                                          String roleName) {
-        Map<String,Object> map = roleService.queryRoleListByPage(pageNo,pageSize,roleName);
+                                          SearchRoleDto roleDto) {
+        Map<String,Object> map = roleService.queryRoleListByPage(pageNo,pageSize,roleDto);
         return ResultData.success(map);
     }
 
