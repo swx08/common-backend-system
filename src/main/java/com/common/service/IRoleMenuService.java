@@ -13,4 +13,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IRoleMenuService extends IService<RoleMenu> {
 
+    /**
+     * 删除角色菜单关联表数据
+     * @param id
+     */
+    void removeByRoleId(Integer id);
 }

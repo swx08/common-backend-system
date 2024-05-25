@@ -118,10 +118,10 @@ public class RoleController {
      * @param
      * @return
      */
-//    @DeleteMapping("/delete")
-//    @ApiOperation(value = "删除角色")
-//    public ResultData deleteMenu(@RequestParam("id") Integer id) throws SystemException {
-//        menuService.deleteMenu(id);
-//        return ResultData.success();
-//    }
+    @DeleteMapping("/delete")
+    @ApiOperation(value = "删除角色")
+    public ResultData deleteRole(@RequestParam("id") Integer id) throws SystemException {
+        roleService.deleteRole(id);
+        return ResultData.success();
+    }
 }

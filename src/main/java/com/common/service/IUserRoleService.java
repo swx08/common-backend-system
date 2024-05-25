@@ -13,4 +13,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IUserRoleService extends IService<UserRole> {
 
+    /**
+     * 删除用户角色关联表数据
+     * @param id
+     */
+    void removeByRoleId(Integer id);
 }

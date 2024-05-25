@@ -132,6 +132,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
             log.error("id为{}的菜单有子菜单，无法删除...",id);
             throw new SystemException(ResponseCodeEnum.INCLUDE_SUBMENU);
         }
+        //todo: 删除之前应该将角色菜单关联表中的数据也删除
         if(baseMapper.deleteById(id) > 0){
             log.info("id为{}的菜单删除成功！",id);
         }else{

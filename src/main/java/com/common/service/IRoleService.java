@@ -51,4 +51,10 @@ public interface IRoleService extends IService<Role> {
      * @param role
      */
     void updateRole(Role role) throws SystemException;
+
+    /**
+     * 删除角色
+     * @param id
+     */
+    void deleteRole(Integer id) throws SystemException;
 }

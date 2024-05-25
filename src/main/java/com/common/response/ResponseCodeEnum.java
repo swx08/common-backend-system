@@ -34,7 +34,8 @@ public enum ResponseCodeEnum {
     MENU_TITLE_EXITS(1008,"菜单名称已存在！"),
     INCLUDE_SUBMENU(1009,"包含子菜单！无法删除"),
     ROLE_NAME_EXITS(1010,"角色名称已存在"),
-    ROLE_CODE_EXITS(1011,"角色标识已存在");
+    ROLE_CODE_EXITS(1011,"角色标识已存在"),
+    INSUFFICIENT_AUTHORITY(1012,"无权删除管理员角色！");
 
     /**
      * 响应码

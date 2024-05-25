@@ -3,10 +3,13 @@ package com.common.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.common.exception.SystemException;
+import com.common.mapper.UserRoleMapper;
 import com.common.model.dto.SearchRoleDto;
 import com.common.model.entity.Role;
 import com.common.response.ResponseCodeEnum;
+import com.common.service.IRoleMenuService;
 import com.common.service.IRoleService;
+import com.common.service.IUserRoleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -39,6 +42,10 @@ import java.util.stream.Collectors;
 public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IRoleService {
 
     private final RoleMenuMapper roleMenuMapper;
+
+    private final IUserRoleService userRoleService;
+
+    private final IRoleMenuService roleMenuService;
 
     @Override
     public Map<String, Object> queryRoleListByPage(Integer pageNo, Integer pageSize, SearchRoleDto roleDto) {
@@ -140,5 +147,27 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
         BeanUtils.copyProperties(role,oldRole);
         baseMapper.updateById(oldRole);
         log.info("修改后的角色{}",oldRole);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteRole(Integer id) throws SystemException {
+        Role role = baseMapper.selectById(id);
+        if(null != role){
+            log.info("正在进行删除{}角色操作...",role.getName());
+            //管理员角色无法进行删除
+            if(role.getCode().equalsIgnoreCase("admin")){
+                log.error("管理员角色无权删除！");
+                throw new SystemException(ResponseCodeEnum.INSUFFICIENT_AUTHORITY);
+            }
+            //删除角色前将用户角色关联表和角色菜单关联表中的数据删除
+            //删除用户角色关联表数据
+            userRoleService.removeByRoleId(id);
+            //删除角色菜单关联表数据
+            roleMenuService.removeByRoleId(id);
+            //最后删除角色
+            baseMapper.deleteById(id);
+            log.info("角色{}删除成功！",role.getName());
+        }
     }
 }
