@@ -6,6 +6,9 @@ import com.common.exception.SystemException;
 import com.common.mapper.UserRoleMapper;
 import com.common.model.dto.SearchRoleDto;
 import com.common.model.entity.Role;
+import com.common.model.enums.MenuStatusEnum;
+import com.common.model.enums.MenuTypeEnum;
+import com.common.model.vo.RoleListVo;
 import com.common.response.ResponseCodeEnum;
 import com.common.service.IRoleMenuService;
 import com.common.service.IRoleService;
@@ -58,12 +61,23 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
         Page<Role> userPage = baseMapper.selectPage(pageInfo, wrapper);
         if(userPage != null){
             List<Role> userList = userPage.getRecords();
+            List<RoleListVo> list = new ArrayList<RoleListVo>();
             if(!CollectionUtils.isEmpty(userList)){
-                Map<String,Object> map = new HashMap<>();
-                map.put("data", userList);
-                map.put("total", userPage.getTotal());
-                return map;
+                userList.stream().forEach(role ->{
+                    RoleListVo roleListVo = new RoleListVo();
+                    BeanUtils.copyProperties(role,roleListVo);
+                    if(role.getStatus().intValue() == MenuStatusEnum.OPEN.getCode()){
+                        roleListVo.setChecked(true);
+                    }else{
+                        roleListVo.setChecked(false);
+                    }
+                    list.add(roleListVo);
+                });
             }
+            Map<String,Object> map = new HashMap<>();
+            map.put("data", list);
+            map.put("total", userPage.getTotal());
+            return map;
         }
         return null;
     }
@@ -169,5 +183,22 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
             baseMapper.deleteById(id);
             log.info("角色{}删除成功！",role.getName());
         }
+    }
+
+    @Override
+    public void updateRoleStatus(Integer id) throws SystemException {
+        Role role = baseMapper.selectById(id);
+        log.info("正在修改角色{}的状态...",role.getName());
+        //管理员角色无权修改
+        if("admin".equalsIgnoreCase(role.getCode())) {
+            throw new SystemException(ResponseCodeEnum.INSUFFICIENT_AUTHORITY);
+        }
+        if(role.getStatus().intValue() == MenuStatusEnum.OPEN.getCode()) {
+            role.setStatus(MenuStatusEnum.CLOSE.getCode());
+        }else{
+            role.setStatus(MenuStatusEnum.OPEN.getCode());
+        }
+        baseMapper.updateById(role);
+        log.info("角色{}的状态修改成功",role.getName());
     }
 }

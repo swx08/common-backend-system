@@ -100,6 +100,18 @@ public class RoleController {
     }
 
     /**
+     * 修改角色状态
+     * @param
+     * @return
+     */
+    @PutMapping("/update/status/{id}")
+    @ApiOperation(value = "修改角色状态")
+    public ResultData updateRoleStatus(@PathVariable("id") Integer id) throws SystemException {
+        roleService.updateRoleStatus(id);
+        return ResultData.success();
+    }
+
+    /**
      * 角色数据回显
      * @param
      * @return
