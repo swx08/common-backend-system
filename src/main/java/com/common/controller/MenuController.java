@@ -4,6 +4,7 @@ package com.common.controller;
 import cn.hutool.core.lang.tree.Tree;
 import com.common.exception.SystemException;
 import com.common.model.dto.AddMenuDto;
+import com.common.model.dto.SearchMenuDto;
 import com.common.model.entity.Menu;
 import com.common.model.entity.Role;
 import com.common.response.ResultData;
@@ -44,6 +45,18 @@ public class MenuController {
     @ApiOperation(value = "查询所有菜单数据")
     public ResultData queryMenuList() {
         List<Tree<String>> menuList = menuService.queryMenuList();
+        return ResultData.success(menuList);
+    }
+
+    /**
+     * 模糊查询菜单数据
+     * @param
+     * @return
+     */
+    @PostMapping("/list/like")
+    @ApiOperation(value = "模糊查询菜单数据")
+    public ResultData queryMenuListByLike(@RequestBody SearchMenuDto menuDto) {
+        List<AddMenuDto> menuList = menuService.queryMenuListByLike(menuDto);
         return ResultData.success(menuList);
     }
 

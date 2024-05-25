@@ -3,6 +3,7 @@ package com.common.service;
 import cn.hutool.core.lang.tree.Tree;
 import com.common.exception.SystemException;
 import com.common.model.dto.AddMenuDto;
+import com.common.model.dto.SearchMenuDto;
 import com.common.model.entity.Menu;
 import com.common.model.entity.Role;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -54,4 +55,11 @@ public interface IMenuService extends IService<Menu> {
      * @param menu
      */
     void updateMenu(AddMenuDto menu) throws SystemException;
+
+    /**
+     * 模糊查询菜单数据
+     * @param menuDto
+     * @return
+     */
+    List<AddMenuDto> queryMenuListByLike(SearchMenuDto menuDto);
 }

@@ -4,8 +4,10 @@ import cn.hutool.core.lang.tree.Tree;
 import cn.hutool.core.lang.tree.TreeNodeConfig;
 import cn.hutool.core.lang.tree.TreeUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.common.exception.SystemException;
 import com.common.model.dto.AddMenuDto;
+import com.common.model.dto.SearchMenuDto;
 import com.common.model.entity.Menu;
 import com.common.model.entity.Role;
 import com.common.model.enums.MenuStatusEnum;
@@ -24,6 +26,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,9 +50,9 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
      */
     @Override
     public List<Tree<String>> queryMenuList() {
-        QueryWrapper<Menu> wrapper = new QueryWrapper<>();
         //查询菜单数据
         log.info("查询菜单数据...");
+        QueryWrapper<Menu> wrapper = new QueryWrapper<>();
         wrapper.orderByDesc("create_time");
         List<Menu> menusList = baseMapper.selectList(wrapper);
         TreeNodeConfig treeNodeConfig = new TreeNodeConfig();
@@ -170,6 +173,28 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
         BeanUtils.copyProperties(menu,updateMenu);
         log.info("要修改的菜单数据为：{}",updateMenu);
         baseMapper.updateById(updateMenu);
+    }
+
+    @Override
+    public List<AddMenuDto> queryMenuListByLike(SearchMenuDto menuDto) {
+        //查询菜单数据
+        log.info("模糊查询菜单数据...");
+        QueryWrapper<Menu> wrapper = new QueryWrapper<>();
+        //模糊查询
+        wrapper.like(!StringUtils.isBlank(menuDto.getTitle()),"title",menuDto.getTitle().trim());
+        wrapper.eq(null != menuDto.getType(),"type",menuDto.getType());
+        wrapper.eq(null != menuDto.getStatus(),"status",menuDto.getStatus());
+        List<Menu> menuList = baseMapper.selectList(wrapper);
+        if(!CollectionUtils.isEmpty(menuList)){
+            List<AddMenuDto> list = new ArrayList<AddMenuDto>();
+            menuList.stream().forEach(menu -> {
+                AddMenuDto addMenuDto = new AddMenuDto();
+                BeanUtils.copyProperties(menu,addMenuDto);
+                list.add(addMenuDto);
+            });
+            return list;
+        }
+        return null;
     }
 
     private void verifyMenuUniqueWithUpdate(AddMenuDto menu) throws SystemException {
