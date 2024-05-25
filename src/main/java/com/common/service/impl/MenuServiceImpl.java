@@ -76,32 +76,19 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
     }
 
     @Override
-    public List<Integer> queryRoleMenuList(Role role) {
-        //如果是admin管理员角色则返回所有的菜单及按钮
-        if("admin".equalsIgnoreCase(role.getCode())){
-            //由于前端展示需求，只需返回按钮级别的id即可
-            //过滤出按钮的id并且状态是开启的
-            List<Menu> menuList = baseMapper.selectList(null);
+    public List<Integer> queryRoleMenuList(Integer id) {
+        QueryWrapper<RoleMenu> wrapper = new QueryWrapper<>();
+        wrapper.eq("role_id", id);
+        List<RoleMenu> roleMenus = roleMenuMapper.selectList(wrapper);
+        if(!CollectionUtils.isEmpty(roleMenus)) {
+            List<Integer> menuIdList = roleMenus.stream().map(RoleMenu::getMenuId).collect(Collectors.toList());
+            List<Menu> menuList = baseMapper.selectBatchIds(menuIdList);
             List<Integer> buttonIds = menuList.stream().filter(menu -> (menu.getType() == MenuTypeEnum.BUTTON.getCode()) && (menu.getStatus() == MenuStatusEnum.OPEN.getCode()))
                     .collect(Collectors.toList())
                     .stream().map(Menu::getId).collect(Collectors.toList());
             return buttonIds;
-        }else{
-            QueryWrapper<RoleMenu> wrapper = new QueryWrapper<>();
-            wrapper.eq("role_id", role.getId());
-            List<Integer> menuIdList = roleMenuMapper.selectList(wrapper).stream().map(RoleMenu::getMenuId).collect(Collectors.toList());
-            if(!CollectionUtils.isEmpty(menuIdList)){
-                //TODO：其实这里不应该直接返回数据，还需从menu表中查询菜单或按钮是否是开启状态，否则不返回。
-                //由于前端展示需求，只需返回按钮级别的id即可
-                //过滤出按钮的id并且状态是开启的
-                List<Menu> menuList = baseMapper.selectBatchIds(menuIdList);
-                List<Integer> buttonIds = menuList.stream().filter(menu -> (menu.getType() == MenuTypeEnum.BUTTON.getCode()) && (menu.getStatus() == MenuStatusEnum.OPEN.getCode()))
-                        .collect(Collectors.toList())
-                        .stream().map(Menu::getId).collect(Collectors.toList());
-                return buttonIds;
-            }
-            return null;
         }
+        return null;
     }
 
     @Override
@@ -196,6 +183,29 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
             return list;
         }
         return null;
+    }
+
+    @Override
+    public List<Tree<String>> queryMenuListWithPermission() {
+        //查询菜单数据
+        log.info("查询分配权限菜单数据...");
+        QueryWrapper<Menu> wrapper = new QueryWrapper<>();
+        wrapper.eq("status",MenuStatusEnum.OPEN.getCode());
+        wrapper.orderByDesc("create_time");
+        List<Menu> menusList = baseMapper.selectList(wrapper);
+        TreeNodeConfig treeNodeConfig = new TreeNodeConfig();
+        // 最大递归深度
+        treeNodeConfig.setDeep(3);
+        List<Tree<String>> treeNodes = TreeUtil.build(menusList, "0", treeNodeConfig,
+                (treeNode, tree) -> {
+                    //这俩属性必须设置
+                    tree.setId(treeNode.getId().toString());
+                    tree.setParentId(treeNode.getParentId().toString());
+                    // 扩展属性 ...
+                    tree.putExtra("key", treeNode.getId());
+                    tree.putExtra("title", treeNode.getTitle());
+                });
+        return treeNodes;
     }
 
     private void verifyMenuUniqueWithUpdate(AddMenuDto menu) throws SystemException {

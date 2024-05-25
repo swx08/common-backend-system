@@ -49,6 +49,18 @@ public class MenuController {
     }
 
     /**
+     * 分配权限时获取菜单树形数据
+     * @param
+     * @return
+     */
+    @GetMapping("/permission/list")
+    @ApiOperation(value = "分配权限时获取菜单树形数据")
+    public ResultData queryMenuListWithPermission() {
+        List<Tree<String>> menuList = menuService.queryMenuListWithPermission();
+        return ResultData.success(menuList);
+    }
+
+    /**
      * 模糊查询菜单数据
      * @param
      * @return
@@ -65,10 +77,10 @@ public class MenuController {
      * @param
      * @return
      */
-    @PostMapping("/role/query")
+    @GetMapping("/query/role/permissions")
     @ApiOperation(value = "查询角色的权限数据")
-    public ResultData queryRoleMenuList(@RequestBody Role role) {
-        List<Integer> menuIdList = menuService.queryRoleMenuList(role);
+    public ResultData queryRoleMenuList(@RequestParam("id") Integer id) {
+        List<Integer> menuIdList = menuService.queryRoleMenuList(id);
         return ResultData.success(menuIdList);
     }
 
