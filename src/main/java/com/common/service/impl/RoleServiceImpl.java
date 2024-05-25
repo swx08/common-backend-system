@@ -2,15 +2,19 @@ package com.common.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.common.exception.SystemException;
 import com.common.model.dto.SearchRoleDto;
 import com.common.model.entity.Role;
+import com.common.response.ResponseCodeEnum;
 import com.common.service.IRoleService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import com.common.mapper.RoleMenuMapper;
 import com.common.mapper.RoleMapper;
 import com.common.model.entity.RoleMenu;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -29,6 +33,7 @@ import java.util.stream.Collectors;
  * @author author
  * @since 2024-04-21
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IRoleService {
@@ -88,5 +93,52 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
                 roleMenuMapper.insert(roleMenu);
             });
         }
+    }
+
+    @Override
+    public void saveRole(Role role) throws SystemException {
+        log.info("正在新增{}角色...",role.getName());
+        //角色名称和标识唯一
+        QueryWrapper<Role> wrapper = new QueryWrapper<>();
+        wrapper.eq("name",role.getName());
+        Role selectOne = baseMapper.selectOne(wrapper);
+        if(null != selectOne){
+            log.error("角色名称{}已存在，新增失败...", role.getName());
+            throw new SystemException(ResponseCodeEnum.ROLE_NAME_EXITS);
+        }
+        QueryWrapper<Role> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("code",role.getCode());
+        Role selectTwo = baseMapper.selectOne(wrapper);
+        if(null != selectTwo){
+            log.error("角色标识{}已存在，新增失败...", role.getName());
+            throw new SystemException(ResponseCodeEnum.ROLE_CODE_EXITS);
+        }
+        //新增角色
+        baseMapper.insert(role);
+    }
+
+    @Override
+    public void updateRole(Role role) throws SystemException {
+        Role oldRole = baseMapper.selectById(role.getId());
+        log.info("正在修改{}角色...",oldRole.getName());
+        //角色名称和标识唯一
+        QueryWrapper<Role> wrapper = new QueryWrapper<>();
+        wrapper.eq("name",role.getName());
+        Role selectOne = baseMapper.selectOne(wrapper);
+        if((null != selectOne) && (oldRole.getId().intValue() != selectOne.getId())){
+            log.error("角色名称{}已存在，修改失败...", role.getName());
+            throw new SystemException(ResponseCodeEnum.ROLE_NAME_EXITS);
+        }
+        QueryWrapper<Role> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("code",role.getCode());
+        Role selectTwo = baseMapper.selectOne(queryWrapper);
+        if((null != selectTwo) && (oldRole.getId().intValue() != selectTwo.getId())){
+            log.error("角色标识{}已存在，修改失败...", role.getName());
+            throw new SystemException(ResponseCodeEnum.ROLE_CODE_EXITS);
+        }
+        //修改角色
+        BeanUtils.copyProperties(role,oldRole);
+        baseMapper.updateById(oldRole);
+        log.info("修改后的角色{}",oldRole);
     }
 }

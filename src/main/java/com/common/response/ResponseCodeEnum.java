@@ -32,7 +32,9 @@ public enum ResponseCodeEnum {
     COMPONENT_NAME_ILLEGAL(1006,"组件路径命名不规范！"),
     MENU_NAME_EXITS(1007,"组件名称已存在！"),
     MENU_TITLE_EXITS(1008,"菜单名称已存在！"),
-    INCLUDE_SUBMENU(1009,"包含子菜单！无法删除");
+    INCLUDE_SUBMENU(1009,"包含子菜单！无法删除"),
+    ROLE_NAME_EXITS(1010,"角色名称已存在"),
+    ROLE_CODE_EXITS(1011,"角色标识已存在");
 
     /**
      * 响应码

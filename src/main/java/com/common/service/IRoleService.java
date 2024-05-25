@@ -1,5 +1,6 @@
 package com.common.service;
 
+import com.common.exception.SystemException;
 import com.common.model.dto.SearchRoleDto;
 import com.common.model.entity.Role;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -38,4 +39,16 @@ public interface IRoleService extends IService<Role> {
      * @param menuIds
      */
     void savePermission(Integer roleId, List<Integer> menuIds);
+
+    /**
+     * 新增角色
+     * @param role
+     */
+    void saveRole(Role role) throws SystemException;
+
+    /**
+     * 修改角色
+     * @param role
+     */
+    void updateRole(Role role) throws SystemException;
 }

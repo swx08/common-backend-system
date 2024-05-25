@@ -4,9 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e632bd2a-f86d-43ec-aefd-8d863ff5fb26" name="Changes" comment="角色管理模块--角色查询">
+    <list default="true" id="e632bd2a-f86d-43ec-aefd-8d863ff5fb26" name="Changes" comment="角色管理模块--角色新增">
+      <change afterPath="$PROJECT_DIR$/.idea/JavaSceneConfigState.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/common/model/vo/EchoRoleVo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/common/controller/RoleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/controller/RoleController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/common/response/ResponseCodeEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/response/ResponseCodeEnum.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/common/service/IRoleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/service/IRoleService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/common/service/impl/MenuServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/service/impl/MenuServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/common/service/impl/RoleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/service/impl/RoleServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,6 +63,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.common.model.vo" />
       <recent name="com.common.model.dto" />
     </key>
   </component>
@@ -77,7 +84,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1716620798532</updated>
-      <workItem from="1716620801604" duration="10087000" />
+      <workItem from="1716620801604" duration="12605000" />
     </task>
     <task id="LOCAL-00001" summary="菜单管理模块开发">
       <option name="closed" value="true" />
@@ -103,7 +110,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716636756912</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="角色管理模块--角色新增">
+      <option name="closed" value="true" />
+      <created>1716637951922</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1716637951922</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -136,6 +151,18 @@
     <MESSAGE value="菜单管理模块开发" />
     <MESSAGE value="菜单模糊查询开发--菜单管理开发完成" />
     <MESSAGE value="角色管理模块--角色查询" />
-    <option name="LAST_COMMIT_MESSAGE" value="角色管理模块--角色查询" />
+    <MESSAGE value="角色管理模块--角色新增" />
+    <option name="LAST_COMMIT_MESSAGE" value="角色管理模块--角色新增" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/common/service/impl/RoleServiceImpl.java</url>
+          <line>133</line>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

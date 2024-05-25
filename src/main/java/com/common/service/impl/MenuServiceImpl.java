@@ -129,13 +129,13 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
         QueryWrapper<Menu> wrapper = new QueryWrapper<>();
         wrapper.eq("parent_id",id);
         if(baseMapper.selectCount(wrapper) > 0){
-            log.info("id为{}的菜单有子菜单，无法删除...",id);
+            log.error("id为{}的菜单有子菜单，无法删除...",id);
             throw new SystemException(ResponseCodeEnum.INCLUDE_SUBMENU);
         }
         if(baseMapper.deleteById(id) > 0){
             log.info("id为{}的菜单删除成功！",id);
         }else{
-            log.info("id为{}的菜单删除失败！",id);
+            log.error("id为{}的菜单删除失败！",id);
             throw new SystemException(ResponseCodeEnum.SYSTEM_ERROR);
         }
     }
@@ -202,12 +202,14 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
         wrapper.eq("name", menu.getName());
         Menu selectOne = baseMapper.selectOne(wrapper);
         if((null != selectOne) && (selectOne.getId().intValue() != menu.getId())) {
+            log.error("菜单组件名称已存在，修改失败...");
             throw new SystemException(ResponseCodeEnum.MENU_NAME_EXITS);
         }
         QueryWrapper<Menu> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("title", menu.getTitle());
         Menu selectTwo = baseMapper.selectOne(queryWrapper);
         if((null != selectTwo) && (selectTwo.getId().intValue() != menu.getId())) {
+            log.error("菜单名称已存在，修改失败...");
             throw new SystemException(ResponseCodeEnum.MENU_TITLE_EXITS);
         }
     }
@@ -240,7 +242,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
     private void verifyMenuName(AddMenuDto menu) throws SystemException {
         if(!StringUtils.isBlank(menu.getPermission())){
             if(!RegexUtils.verifyMenuPermission(menu.getPermission())) {
-                log.info("校验菜单权限标识命名规范不通过...");
+                log.error("校验菜单权限标识命名规范不通过...");
                 throw new SystemException(ResponseCodeEnum.PERMISSION_NAME_ILLEGAL);
             }
 
@@ -248,7 +250,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
         if(!StringUtils.isBlank(menu.getComponent())) {
             //校验菜单权限标识和组件路径是否符合命名规范
             if(!RegexUtils.verifyMenuComponent(menu.getComponent())) {
-                log.info("校验组件路径命名规范不通过...");
+                log.error("校验组件路径命名规范不通过...");
                 throw new SystemException(ResponseCodeEnum.COMPONENT_NAME_ILLEGAL);
             }
         }
@@ -263,36 +265,14 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
         QueryWrapper<Menu> wrapper = new QueryWrapper<>();
         wrapper.eq("name", menu.getName());
         if(!CollectionUtils.isEmpty(baseMapper.selectList(wrapper))) {
+            log.error("菜单组件名称已存在...");
             throw new SystemException(ResponseCodeEnum.MENU_NAME_EXITS);
         }
         QueryWrapper<Menu> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("title", menu.getTitle());
         if(!CollectionUtils.isEmpty(baseMapper.selectList(queryWrapper))) {
+            log.error("菜单名称已存在...");
             throw new SystemException(ResponseCodeEnum.MENU_TITLE_EXITS);
         }
     }
-
-    /**
-     * 将菜单数据封装成树形数据格式返回
-     * @param menuIds
-     */
-//    private List<Tree<String>> buildTree(List<Integer> menuIds) {
-//        List<Menu> menusList = menuMapper.selectBatchIds(menuIds);
-//        TreeNodeConfig treeNodeConfig = new TreeNodeConfig();
-//        // 最大递归深度
-//        treeNodeConfig.setDeep(2);
-//        List<Tree<String>> treeNodes = TreeUtil.build(menusList, "0", treeNodeConfig,
-//                (treeNode, tree) -> {
-//                    //这俩属性必须设置
-//                    tree.setId(treeNode.getId().toString());
-//                    tree.setParentId(treeNode.getParentId().toString());
-//                    // 扩展属性 ...
-//                    tree.putExtra("path", treeNode.getPath());
-//                    tree.putExtra("name", treeNode.getName());
-//                    tree.putExtra("title", treeNode.getTitle());
-//                    tree.putExtra("hidden", treeNode.getHidden());
-//                    tree.putExtra("icon", treeNode.getIcon());
-//                });
-//        return treeNodes;
-//    }
 }
