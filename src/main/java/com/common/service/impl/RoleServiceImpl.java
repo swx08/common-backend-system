@@ -42,6 +42,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
         wrapper.like(StringUtils.isNotBlank(roleDto.getName()),"name",roleDto.getName().trim());
         wrapper.like(StringUtils.isNotBlank(roleDto.getCode()),"code",roleDto.getCode().trim());
         wrapper.eq(null != roleDto.getStatus(),"status",roleDto.getStatus());
+        wrapper.orderByDesc("create_time");
         Page<Role> userPage = baseMapper.selectPage(pageInfo, wrapper);
         if(userPage != null){
             List<Role> userList = userPage.getRecords();

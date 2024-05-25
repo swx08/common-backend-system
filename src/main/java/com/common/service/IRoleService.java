@@ -21,7 +21,7 @@ public interface IRoleService extends IService<Role> {
      * 分页查询角色数据
      * @param pageNo
      * @param pageSize
-     * @param roleName
+     * @param roleDto
      * @return
      */
     Map<String, Object> queryRoleListByPage(Integer pageNo, Integer pageSize, SearchRoleDto roleDto);

@@ -58,7 +58,7 @@ public class RoleController {
      * @param
      * @return
      */
-    @PostMapping("/save")
+    @PostMapping("/add")
     public ResultData saveRole(@RequestBody Role role) {
         roleService.save(role);
         return ResultData.success();
