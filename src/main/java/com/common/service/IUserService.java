@@ -3,6 +3,7 @@ package com.common.service;
 import com.common.exception.SystemException;
 import com.common.model.dto.LoginUserDto;
 import com.common.model.dto.RegisterUserDto;
+import com.common.model.dto.ResetPwdUserDto;
 import com.common.model.dto.SearchUserDto;
 import com.common.model.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -76,4 +77,11 @@ public interface IUserService extends IService<User> {
      * @return
      */
     ResultData register(RegisterUserDto user) throws SystemException;
+
+    /**
+     * 重置用户密码
+     * @param userDto
+     * @return
+     */
+    ResultData resetPassword(ResetPwdUserDto userDto) throws SystemException;
 }

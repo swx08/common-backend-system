@@ -4,6 +4,7 @@ import cn.dev33.satoken.stp.StpUtil;
 import com.common.exception.SystemException;
 import com.common.model.dto.LoginUserDto;
 import com.common.model.dto.RegisterUserDto;
+import com.common.model.dto.ResetPwdUserDto;
 import com.common.model.dto.SearchUserDto;
 import com.common.model.entity.Role;
 import com.common.model.entity.User;
@@ -164,6 +165,17 @@ public class UserController {
     public ResultData logout(@RequestParam("token") String token) throws SystemException {
         StpUtil.logoutByTokenValue(token);
         return ResultData.success();
+    }
+
+    /**
+     * 重置用户密码
+     * @return
+     * @throws SystemException
+     */
+    @PostMapping("/reset/pwd")
+    @ApiOperation(value = "重置用户密码")
+    public ResultData resetPassword(@RequestBody @Valid ResetPwdUserDto userDto) throws SystemException {
+        return userService.resetPassword(userDto);
     }
 
     /**

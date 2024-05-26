@@ -8,10 +8,9 @@ import com.common.exception.SystemException;
 import com.common.mapper.*;
 import com.common.model.dto.LoginUserDto;
 import com.common.model.dto.RegisterUserDto;
+import com.common.model.dto.ResetPwdUserDto;
 import com.common.model.dto.SearchUserDto;
-import com.common.model.dto.UserDto;
 import com.common.model.entity.*;
-import com.common.model.enums.MenuStatusEnum;
 import com.common.model.enums.MenuTypeEnum;
 import com.common.model.enums.UserStatusEnum;
 import com.common.model.vo.EchoUserVo;
@@ -410,6 +409,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         }else {
             log.error("用户{}注册失败！",userDto.getUsername());
             return ResultData.fail(1018,"用户注册失败！");
+        }
+    }
+
+    @Override
+    public ResultData resetPassword(ResetPwdUserDto userDto) throws SystemException {
+        User user = baseMapper.selectById(userDto.getId());
+        if(null == user) {
+            throw new SystemException(ResponseCodeEnum.USER_NOT_EXITS);
+        }
+        user.setPassword(DigestUtil.md5Hex(userDto.getPassword()));
+        if(baseMapper.updateById(user) > 0) {
+            log.info("用户{}的密码修改成功！",user.getUsername());
+            return ResultData.success();
+        }else {
+            log.error("用户{}的密码修改失败！",user.getUsername());
+            return ResultData.fail(1019,"用户密码修改失败！");
         }
     }
 

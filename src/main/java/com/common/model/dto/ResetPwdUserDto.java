@@ -1,14 +1,12 @@
 package com.common.model.dto;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.List;
 
@@ -25,15 +23,12 @@ import java.util.List;
 @Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDto implements Serializable {
+public class ResetPwdUserDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private Integer id;
 
-    private String username;
-
+    @NotBlank(message = "密码不能为空")
     private String password;
-
-    private List<String> roles;
 }
