@@ -132,7 +132,7 @@ public class UserController {
      */
     @PutMapping("/update/status/{id}")
     @ApiOperation(value = "修改用户状态")
-    public ResultData updateUserStatus(@PathVariable("id") Integer id){
+    public ResultData updateUserStatus(@PathVariable("id") Integer id) throws SystemException {
         return userService.updateUserStatus(id);
     }
 

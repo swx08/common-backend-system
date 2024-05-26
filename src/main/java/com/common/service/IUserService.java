@@ -46,7 +46,7 @@ public interface IUserService extends IService<User> {
      * 修改用户状态
      * @param id
      */
-    ResultData updateUserStatus(Integer id);
+    ResultData updateUserStatus(Integer id) throws SystemException;
 
     /**
      * 用户数据回显

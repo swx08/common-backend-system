@@ -241,23 +241,50 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     @Override
-    public ResultData updateUserStatus(Integer id) {
+    public ResultData updateUserStatus(Integer id) throws SystemException {
         User user = baseMapper.selectById(id);
         log.info("正在修改用户{}的状态...",user.getUsername());
-        if(user.getStatus().intValue() == UserStatusEnum.OPEN.getCode()) {
-            log.info("修改状态为：{}",UserStatusEnum.CLOSE.getStatus());
-            user.setStatus(UserStatusEnum.CLOSE.getCode());
+        //拥有管理员角色的用户无权修改
+        boolean verify = verifyRole(user);
+        if(verify) {
+            throw new SystemException(ResponseCodeEnum.INSUFFICIENT_AUTHORITY);
         }else{
-            log.info("修改状态为：{}",UserStatusEnum.OPEN.getStatus());
-            user.setStatus(UserStatusEnum.OPEN.getCode());
+            if(user.getStatus().intValue() == UserStatusEnum.OPEN.getCode()) {
+                log.info("修改状态为：{}",UserStatusEnum.CLOSE.getStatus());
+                user.setStatus(UserStatusEnum.CLOSE.getCode());
+            }else{
+                log.info("修改状态为：{}",UserStatusEnum.OPEN.getStatus());
+                user.setStatus(UserStatusEnum.OPEN.getCode());
+            }
+            if(baseMapper.updateById(user) > 0) {
+                log.info("用户{}的状态修改成功",user.getUsername());
+                return ResultData.success();
+            }else{
+                log.error("用户{}的状态修改失败",user.getUsername());
+                return ResultData.fail(1013,"用户状态修改失败！");
+            }
         }
-        if(baseMapper.updateById(user) > 0) {
-            log.info("用户{}的状态修改成功",user.getUsername());
-            return ResultData.success();
-        }else{
-            log.error("用户{}的状态修改失败",user.getUsername());
-            return ResultData.fail(1013,"用户状态修改失败！");
+    }
+
+    /**
+     * 拥有管理员角色的用户无权修改
+     * @param user
+     * @return
+     */
+    private boolean verifyRole(User user) {
+        QueryWrapper<UserRole> wrapper = new QueryWrapper<>();
+        wrapper.eq("user_id", user.getId());
+        List<UserRole> userRoleList = userRoleMapper.selectList(wrapper);
+        if(!CollectionUtils.isEmpty(userRoleList)){
+            List<Integer> roleIds = userRoleList.stream().map(UserRole::getRoleId).collect(Collectors.toList());
+            List<Role> roleList = roleMapper.selectBatchIds(roleIds);
+            for (Role role : roleList) {
+                if(role.getCode().equalsIgnoreCase("admin")){
+                    return true;
+                }
+            }
         }
+        return false;
     }
 
     @Override
