@@ -111,6 +111,17 @@ public class UserController {
     }
 
     /**
+     * 修改用户状态
+     * @param
+     * @return
+     */
+    @PutMapping("/update/status/{id}")
+    @ApiOperation(value = "修改用户状态")
+    public ResultData updateUserStatus(@PathVariable("id") Integer id){
+        return userService.updateUserStatus(id);
+    }
+
+    /**
      * 用户退出登录
      * @return
      * @throws SystemException

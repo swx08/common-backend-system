@@ -9,10 +9,12 @@ import com.common.model.dto.LoginUserDto;
 import com.common.model.dto.SearchUserDto;
 import com.common.model.dto.UserDto;
 import com.common.model.entity.*;
+import com.common.model.enums.MenuStatusEnum;
 import com.common.model.enums.MenuTypeEnum;
 import com.common.model.enums.UserStatusEnum;
 import com.common.model.vo.UserListVo;
 import com.common.response.ResponseCodeEnum;
+import com.common.response.ResultData;
 import com.common.service.IUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -232,6 +234,26 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
                 userRole.setRoleId(roleId);
                 userRoleMapper.insert(userRole);
             });
+        }
+    }
+
+    @Override
+    public ResultData updateUserStatus(Integer id) {
+        User user = baseMapper.selectById(id);
+        log.info("正在修改用户{}的状态...",user.getUsername());
+        if(user.getStatus().intValue() == UserStatusEnum.OPEN.getCode()) {
+            log.info("修改状态为：{}",UserStatusEnum.CLOSE.getStatus());
+            user.setStatus(UserStatusEnum.CLOSE.getCode());
+        }else{
+            log.info("修改状态为：{}",UserStatusEnum.OPEN.getStatus());
+            user.setStatus(UserStatusEnum.OPEN.getCode());
+        }
+        if(baseMapper.updateById(user) > 0) {
+            log.info("用户{}的状态修改成功",user.getUsername());
+            return ResultData.success();
+        }else{
+            log.error("用户{}的状态修改失败",user.getUsername());
+            return ResultData.fail(1013,"用户状态修改失败！");
         }
     }
 }

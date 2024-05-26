@@ -5,6 +5,7 @@ import com.common.model.dto.LoginUserDto;
 import com.common.model.dto.SearchUserDto;
 import com.common.model.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.common.response.ResultData;
 
 import java.util.List;
 import java.util.Map;
@@ -39,4 +40,10 @@ public interface IUserService extends IService<User> {
     List<String> queryRoles(Integer userId);
 
     void saveRoles(String username,List<String> roles);
+
+    /**
+     * 修改用户状态
+     * @param id
+     */
+    ResultData updateUserStatus(Integer id);
 }
