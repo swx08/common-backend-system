@@ -18,4 +18,10 @@ public interface IUserRoleService extends IService<UserRole> {
      * @param id
      */
     void removeByRoleId(Integer id);
+
+    /**
+     * 删除用户角色关联表的数据
+     * @param id
+     */
+    void removeByUserId(Integer id);
 }

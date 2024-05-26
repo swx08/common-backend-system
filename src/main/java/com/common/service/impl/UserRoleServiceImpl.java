@@ -31,4 +31,16 @@ public class UserRoleServiceImpl extends ServiceImpl<UserRoleMapper, UserRole> i
             log.warn("此角色无关联用户数据！");
         }
     }
+
+    @Override
+    public void removeByUserId(Integer id) {
+        log.info("正在删除id为{}的用户的角色关联数据...",id);
+        QueryWrapper<UserRole> wrapper = new QueryWrapper<>();
+        wrapper.eq("user_id", id);
+        if(baseMapper.delete(wrapper) > 0){
+            log.info("删除成功！");
+        }else{
+            log.warn("此用户无关联角色数据！");
+        }
+    }
 }

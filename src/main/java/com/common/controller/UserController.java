@@ -159,4 +159,15 @@ public class UserController {
         StpUtil.logoutByTokenValue(token);
         return ResultData.success();
     }
+
+    /**
+     * 删除用户
+     * @param
+     * @return
+     */
+    @DeleteMapping("/delete/{id}")
+    @ApiOperation(value = "删除用户")
+    public ResultData deleteUser(@PathVariable("id") Integer id) throws SystemException {
+        return userService.deleteUser(id);
+    }
 }

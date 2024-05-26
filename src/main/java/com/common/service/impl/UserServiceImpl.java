@@ -16,6 +16,7 @@ import com.common.model.vo.EchoUserVo;
 import com.common.model.vo.UserListVo;
 import com.common.response.ResponseCodeEnum;
 import com.common.response.ResultData;
+import com.common.service.IUserRoleService;
 import com.common.service.IUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -46,6 +47,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     private final RoleMenuMapper roleMenuMapper;
     private final MenuMapper menuMapper;
     private final RoleMapper roleMapper;
+    private final IUserRoleService userRoleService;
 
     @Override
     public String login(LoginUserDto user) throws SystemException {
@@ -80,7 +82,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         if(!CollectionUtils.isEmpty(roleIds)){
             isAdmin = this.hasAdminPermission(roleIds);
         }
-        if((user.getUsername().equalsIgnoreCase("admin")) || (isAdmin)){
+        if(isAdmin){
             //如果用户名是admin则查询所有的菜单和按钮
             return this.queryAdminInfo(user);
         }else{
@@ -311,5 +313,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             }
         }
         return ResultData.fail(ResponseCodeEnum.USER_NOT_EXITS);
+    }
+
+    @Override
+    public ResultData deleteUser(Integer id) {
+        log.info("正在删除id为{}的用户",id);
+        //删除用户角色关联表的数据
+        userRoleService.removeByUserId(id);
+        //删除用户
+        if(baseMapper.deleteById(id) > 0) {
+            log.info("id为{}的用户已被彻底删除",id);
+            return ResultData.success();
+        }else{
+            log.error("id为{}的用户删除失败",id);
+            return ResultData.fail(1017,"用户删除失败！");
+        }
     }
 }
