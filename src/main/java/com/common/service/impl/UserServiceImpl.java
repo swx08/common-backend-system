@@ -268,4 +268,48 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         }
         return null;
     }
+
+    @Override
+    public ResultData updateUser(EchoUserVo userVo) throws SystemException {
+        User user = baseMapper.selectById(userVo.getId());
+        log.info("正在修改用户{}的数据...", user.getUsername());
+        if(null != user){
+            //用户名称唯一
+            QueryWrapper<User> wrapper1 = new QueryWrapper<>();
+            wrapper1.eq("username", userVo.getUsername());
+            User user1 = baseMapper.selectOne(wrapper1);
+            if((user1 != null) && (userVo.getId().intValue() != user1.getId().intValue())){
+                log.error("用户名称已存在{}",userVo.getUsername());
+                throw new SystemException(ResponseCodeEnum.USERNAME_EXITS);
+            }
+
+            //手机号唯一
+            QueryWrapper<User> wrapper2 = new QueryWrapper<>();
+            wrapper2.eq("phone", userVo.getPhone());
+            User user2 = baseMapper.selectOne(wrapper2);
+            if((user2 != null) && (userVo.getId().intValue() != user2.getId().intValue())){
+                log.error("手机号已存在{}",userVo.getPhone());
+                throw new SystemException(ResponseCodeEnum.PHONE_EXITS);
+            }
+
+            //邮箱唯一
+            QueryWrapper<User> wrapper3 = new QueryWrapper<>();
+            wrapper3.eq("email", userVo.getEmail());
+            User user3 = baseMapper.selectOne(wrapper3);
+            if((user3 != null) && (userVo.getId().intValue() != user3.getId().intValue())){
+                log.error("邮箱已存在{}",userVo.getEmail());
+                throw new SystemException(ResponseCodeEnum.EMAIL_EXITS);
+            }
+            //用户数据修改
+            BeanUtils.copyProperties(userVo, user);
+            if(baseMapper.updateById(user) > 0){
+                log.info("用户{}的数据修改成功！", user.getUsername());
+                return ResultData.success();
+            }else {
+                log.error("用户{}的数据修改失败！", user.getUsername());
+                return ResultData.fail(1016,"用户信息修改失败！");
+            }
+        }
+        return ResultData.fail(ResponseCodeEnum.USER_NOT_EXITS);
+    }
 }

@@ -54,4 +54,11 @@ public interface IUserService extends IService<User> {
      * @return
      */
     EchoUserVo echoUserById(Integer id);
+
+    /**
+     * 修改用户
+     * @param userVo
+     * @return
+     */
+    ResultData updateUser(EchoUserVo userVo) throws SystemException;
 }

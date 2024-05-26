@@ -35,7 +35,10 @@ public enum ResponseCodeEnum {
     INCLUDE_SUBMENU(1009,"包含子菜单！无法删除"),
     ROLE_NAME_EXITS(1010,"角色名称已存在"),
     ROLE_CODE_EXITS(1011,"角色标识已存在"),
-    INSUFFICIENT_AUTHORITY(1012,"无权操作管理员角色！");
+    INSUFFICIENT_AUTHORITY(1012,"无权操作管理员角色！"),
+    USERNAME_EXITS(1014,"用户名称已存在！"),
+    PHONE_EXITS(1015,"手机号已存在！"),
+    EMAIL_EXITS(1016,"邮箱已存在！");
 
     /**
      * 响应码

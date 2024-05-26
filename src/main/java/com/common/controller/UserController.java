@@ -119,12 +119,11 @@ public class UserController {
      * @param
      * @return
      */
-//    @PutMapping("/update")
-//    @ApiOperation(value = "修改用户")
-//    public ResultData updateUser(@RequestBody Role role) throws SystemException {
-//        roleService.updateRole(role);
-//        return ResultData.success();
-//    }
+    @PutMapping("/update")
+    @ApiOperation(value = "修改用户")
+    public ResultData updateUser(@RequestBody EchoUserVo userVo) throws SystemException {
+        return userService.updateUser(userVo);
+    }
 
     /**
      * 修改用户状态
