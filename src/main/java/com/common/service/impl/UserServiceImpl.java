@@ -12,6 +12,7 @@ import com.common.model.entity.*;
 import com.common.model.enums.MenuStatusEnum;
 import com.common.model.enums.MenuTypeEnum;
 import com.common.model.enums.UserStatusEnum;
+import com.common.model.vo.EchoUserVo;
 import com.common.model.vo.UserListVo;
 import com.common.response.ResponseCodeEnum;
 import com.common.response.ResultData;
@@ -255,5 +256,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             log.error("用户{}的状态修改失败",user.getUsername());
             return ResultData.fail(1013,"用户状态修改失败！");
         }
+    }
+
+    @Override
+    public EchoUserVo echoUserById(Integer id) {
+        User user = baseMapper.selectById(id);
+        if(null != user){
+            EchoUserVo echoUserVo = new EchoUserVo();
+            BeanUtils.copyProperties(user, echoUserVo);
+            return echoUserVo;
+        }
+        return null;
     }
 }

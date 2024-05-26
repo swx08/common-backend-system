@@ -4,13 +4,17 @@ import cn.dev33.satoken.stp.StpUtil;
 import com.common.exception.SystemException;
 import com.common.model.dto.LoginUserDto;
 import com.common.model.dto.SearchUserDto;
+import com.common.model.entity.Role;
 import com.common.model.entity.User;
+import com.common.model.vo.EchoRoleVo;
+import com.common.model.vo.EchoUserVo;
 import com.common.response.ResultData;
 import com.common.service.IUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -111,6 +115,18 @@ public class UserController {
     }
 
     /**
+     * 修改用户
+     * @param
+     * @return
+     */
+//    @PutMapping("/update")
+//    @ApiOperation(value = "修改用户")
+//    public ResultData updateUser(@RequestBody Role role) throws SystemException {
+//        roleService.updateRole(role);
+//        return ResultData.success();
+//    }
+
+    /**
      * 修改用户状态
      * @param
      * @return
@@ -119,6 +135,18 @@ public class UserController {
     @ApiOperation(value = "修改用户状态")
     public ResultData updateUserStatus(@PathVariable("id") Integer id){
         return userService.updateUserStatus(id);
+    }
+
+    /**
+     * 用户数据回显
+     * @param
+     * @return
+     */
+    @GetMapping("/echo/{id}")
+    @ApiOperation(value = "用户数据回显")
+    public ResultData echoUserById(@PathVariable("id") Integer id) {
+        EchoUserVo echoUserVo = userService.echoUserById(id);
+        return ResultData.success(echoUserVo);
     }
 
     /**

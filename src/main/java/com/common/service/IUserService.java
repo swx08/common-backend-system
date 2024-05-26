@@ -5,6 +5,7 @@ import com.common.model.dto.LoginUserDto;
 import com.common.model.dto.SearchUserDto;
 import com.common.model.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.common.model.vo.EchoUserVo;
 import com.common.response.ResultData;
 
 import java.util.List;
@@ -46,4 +47,11 @@ public interface IUserService extends IService<User> {
      * @param id
      */
     ResultData updateUserStatus(Integer id);
+
+    /**
+     * 用户数据回显
+     * @param id
+     * @return
+     */
+    EchoUserVo echoUserById(Integer id);
 }
