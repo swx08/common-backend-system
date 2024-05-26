@@ -28,6 +28,7 @@ public class LoginInterceptorConfig implements WebMvcConfigurer {
         //2.配置白名单并存放在一个List集合
         List<String> patters = new ArrayList<>();
         patters.add("/user/login");
+        patters.add("/user/register");
 
 
         //registry.addInterceptor(interceptor);完成拦截

@@ -1,11 +1,13 @@
 package com.common.service.impl;
 
 import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.crypto.digest.DigestUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.common.exception.SystemException;
 import com.common.mapper.*;
 import com.common.model.dto.LoginUserDto;
+import com.common.model.dto.RegisterUserDto;
 import com.common.model.dto.SearchUserDto;
 import com.common.model.dto.UserDto;
 import com.common.model.entity.*;
@@ -303,32 +305,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         User user = baseMapper.selectById(userVo.getId());
         log.info("正在修改用户{}的数据...", user.getUsername());
         if(null != user){
-            //用户名称唯一
-            QueryWrapper<User> wrapper1 = new QueryWrapper<>();
-            wrapper1.eq("username", userVo.getUsername());
-            User user1 = baseMapper.selectOne(wrapper1);
-            if((user1 != null) && (userVo.getId().intValue() != user1.getId().intValue())){
-                log.error("用户名称已存在{}",userVo.getUsername());
-                throw new SystemException(ResponseCodeEnum.USERNAME_EXITS);
-            }
-
-            //手机号唯一
-            QueryWrapper<User> wrapper2 = new QueryWrapper<>();
-            wrapper2.eq("phone", userVo.getPhone());
-            User user2 = baseMapper.selectOne(wrapper2);
-            if((user2 != null) && (userVo.getId().intValue() != user2.getId().intValue())){
-                log.error("手机号已存在{}",userVo.getPhone());
-                throw new SystemException(ResponseCodeEnum.PHONE_EXITS);
-            }
-
-            //邮箱唯一
-            QueryWrapper<User> wrapper3 = new QueryWrapper<>();
-            wrapper3.eq("email", userVo.getEmail());
-            User user3 = baseMapper.selectOne(wrapper3);
-            if((user3 != null) && (userVo.getId().intValue() != user3.getId().intValue())){
-                log.error("邮箱已存在{}",userVo.getEmail());
-                throw new SystemException(ResponseCodeEnum.EMAIL_EXITS);
-            }
+            //验证用户名、手机号、邮箱唯一
+            verifyUserWithUpdate(userVo);
             //用户数据修改
             BeanUtils.copyProperties(userVo, user);
             if(baseMapper.updateById(user) > 0){
@@ -340,6 +318,38 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             }
         }
         return ResultData.fail(ResponseCodeEnum.USER_NOT_EXITS);
+    }
+
+    /**
+     * 验证用户名、手机号、邮箱唯一
+     * @param userVo
+     */
+    private void verifyUserWithUpdate(EchoUserVo userVo) throws SystemException {
+        QueryWrapper<User> wrapper1 = new QueryWrapper<>();
+        wrapper1.eq("username", userVo.getUsername());
+        User user1 = baseMapper.selectOne(wrapper1);
+        if((user1 != null) && (userVo.getId().intValue() != user1.getId().intValue())){
+            log.error("用户名称已存在{}",userVo.getUsername());
+            throw new SystemException(ResponseCodeEnum.USERNAME_EXITS);
+        }
+
+        //手机号唯一
+        QueryWrapper<User> wrapper2 = new QueryWrapper<>();
+        wrapper2.eq("phone", userVo.getPhone());
+        User user2 = baseMapper.selectOne(wrapper2);
+        if((user2 != null) && (userVo.getId().intValue() != user2.getId().intValue())){
+            log.error("手机号已存在{}",userVo.getPhone());
+            throw new SystemException(ResponseCodeEnum.PHONE_EXITS);
+        }
+
+        //邮箱唯一
+        QueryWrapper<User> wrapper3 = new QueryWrapper<>();
+        wrapper3.eq("email", userVo.getEmail());
+        User user3 = baseMapper.selectOne(wrapper3);
+        if((user3 != null) && (userVo.getId().intValue() != user3.getId().intValue())){
+            log.error("邮箱已存在{}",userVo.getEmail());
+            throw new SystemException(ResponseCodeEnum.EMAIL_EXITS);
+        }
     }
 
     @Override
@@ -354,6 +364,62 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         }else{
             log.error("id为{}的用户删除失败",id);
             return ResultData.fail(1017,"用户删除失败！");
+        }
+    }
+
+    /**
+     * TODO： 真实环境下需要手机号验证和邮箱验证
+     * @param userDto
+     * @return
+     * @throws SystemException
+     */
+    @Override
+    public ResultData register(RegisterUserDto userDto) throws SystemException {
+        log.info("用户{}正在进行注册操作...",userDto.getUsername());
+        //验证用户名、手机号、邮箱唯一
+        verifyUserWithRegister(userDto);
+        //用户密码加密
+        userDto.setPassword(DigestUtil.md5Hex(userDto.getPassword()));
+        User user = new User();
+        BeanUtils.copyProperties(userDto,user);
+        if(baseMapper.insert(user) > 0){
+            log.info("用户{}注册成功！",userDto.getUsername());
+            return ResultData.success();
+        }else {
+            log.error("用户{}注册失败！",userDto.getUsername());
+            return ResultData.fail(1018,"用户注册失败！");
+        }
+    }
+
+    /**
+     * 验证用户名、手机号、邮箱唯一
+     * @param user
+     */
+    private void verifyUserWithRegister(RegisterUserDto user) throws SystemException {
+        QueryWrapper<User> wrapper1 = new QueryWrapper<>();
+        wrapper1.eq("username", user.getUsername());
+        User user1 = baseMapper.selectOne(wrapper1);
+        if(user1 != null){
+            log.error("用户名称已存在{}",user.getUsername());
+            throw new SystemException(ResponseCodeEnum.USERNAME_EXITS);
+        }
+
+        //手机号唯一
+        QueryWrapper<User> wrapper2 = new QueryWrapper<>();
+        wrapper2.eq("phone", user.getPhone());
+        User user2 = baseMapper.selectOne(wrapper2);
+        if(user2 != null){
+            log.error("手机号已存在{}",user.getPhone());
+            throw new SystemException(ResponseCodeEnum.PHONE_EXITS);
+        }
+
+        //邮箱唯一
+        QueryWrapper<User> wrapper3 = new QueryWrapper<>();
+        wrapper3.eq("email", user.getEmail());
+        User user3 = baseMapper.selectOne(wrapper3);
+        if(user3 != null){
+            log.error("邮箱已存在{}",user.getEmail());
+            throw new SystemException(ResponseCodeEnum.EMAIL_EXITS);
         }
     }
 }
