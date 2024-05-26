@@ -68,7 +68,7 @@ public interface IUserService extends IService<User> {
      * @param id
      * @return
      */
-    ResultData deleteUser(Integer id);
+    ResultData deleteUser(Integer id) throws SystemException;
 
     /**
      * 用户注册

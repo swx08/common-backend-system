@@ -4,13 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="474fd7ce-aec0-4392-b2cc-dfa4ca75158d" name="Changes" comment="用户管理--管理员用户状态无权修改">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/common/model/dto/RegisterUserDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/projectInfo.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/projectInfo.xml" afterDir="false" />
+    <list default="true" id="474fd7ce-aec0-4392-b2cc-dfa4ca75158d" name="Changes" comment="用户管理--用户注册功能开发">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/common/config/interceptor/LoginInterceptorConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/config/interceptor/LoginInterceptorConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/common/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/controller/UserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/common/service/IUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/service/IUserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/common/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/service/impl/UserServiceImpl.java" afterDir="false" />
     </list>
@@ -88,7 +83,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1716684093218</updated>
-      <workItem from="1716684094671" duration="23059000" />
+      <workItem from="1716684094671" duration="25872000" />
     </task>
     <task id="LOCAL-00001" summary="删除菜单的同时删除角色菜单关联表数据">
       <option name="closed" value="true" />
@@ -154,7 +149,39 @@
       <option name="project" value="LOCAL" />
       <updated>1716718901654</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="用户管理--用户注册功能开发">
+      <option name="closed" value="true" />
+      <created>1716733146905</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1716733146905</updated>
+    </task>
+    <task id="LOCAL-00010" summary="用户管理--用户注册功能开发">
+      <option name="closed" value="true" />
+      <created>1716733168326</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1716733168326</updated>
+    </task>
+    <task id="LOCAL-00011" summary="用户管理--用户注册功能开发">
+      <option name="closed" value="true" />
+      <created>1716734083582</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1716734083582</updated>
+    </task>
+    <task id="LOCAL-00012" summary="用户管理--用户注册功能开发">
+      <option name="closed" value="true" />
+      <created>1716734122126</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1716734122126</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -169,6 +196,8 @@
     <MESSAGE value="用户管理--用户数据修改" />
     <MESSAGE value="用户管理--用户数据删除" />
     <MESSAGE value="用户管理--管理员用户状态无权修改" />
-    <option name="LAST_COMMIT_MESSAGE" value="用户管理--管理员用户状态无权修改" />
+    <MESSAGE value="用户管理--完善用户登录逻辑" />
+    <MESSAGE value="用户管理--用户注册功能开发" />
+    <option name="LAST_COMMIT_MESSAGE" value="用户管理--用户注册功能开发" />
   </component>
 </project>

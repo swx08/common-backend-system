@@ -75,16 +75,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      */
     private void verifyUserWithLogin(User selectOne, LoginUserDto user) throws SystemException {
         if(selectOne == null){
-            log.error("用户{}不存在",user.getUsername()));
+            log.error("用户{}不存在",user.getUsername());
             throw new SystemException(ResponseCodeEnum.USER_NOT_EXITS);
         }
-        //校验用户状态
-        if(selectOne.getStatus().intValue() != UserStatusEnum.OPEN.getCode()){
-            log.error("用户{}已被禁用",user.getUsername()));
-            throw new SystemException(ResponseCodeEnum.USER_FORBIDDEN);
+        //管理员角色用户不做状态校验
+        boolean verify = verifyRole(selectOne);
+        if(!verify){
+            //校验用户状态
+            if(selectOne.getStatus().intValue() != UserStatusEnum.OPEN.getCode()){
+                log.error("用户{}已被禁用",user.getUsername());
+                throw new SystemException(ResponseCodeEnum.USER_FORBIDDEN);
+            }
         }
-        if(!selectOne.getPassword().equalsIgnoreCase(user.getPassword())){
-            log.error("用户{}密码错误",user.getUsername()));
+        //密码加密
+        String md5Pwd = DigestUtil.md5Hex(user.getPassword());
+        if(!selectOne.getPassword().equalsIgnoreCase(md5Pwd)){
+            log.error("用户{}密码错误",user.getUsername());
             throw new SystemException(ResponseCodeEnum.PASSWOR_ERROR);
         }
     }
@@ -267,25 +273,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public ResultData updateUserStatus(Integer id) throws SystemException {
         User user = baseMapper.selectById(id);
         log.info("正在修改用户{}的状态...",user.getUsername());
-        //拥有管理员角色的用户无权修改
-        boolean verify = verifyRole(user);
-        if(verify) {
-            throw new SystemException(ResponseCodeEnum.INSUFFICIENT_AUTHORITY);
+        if(user.getStatus().intValue() == UserStatusEnum.OPEN.getCode()) {
+            log.info("修改状态为：{}",UserStatusEnum.CLOSE.getStatus());
+            user.setStatus(UserStatusEnum.CLOSE.getCode());
         }else{
-            if(user.getStatus().intValue() == UserStatusEnum.OPEN.getCode()) {
-                log.info("修改状态为：{}",UserStatusEnum.CLOSE.getStatus());
-                user.setStatus(UserStatusEnum.CLOSE.getCode());
-            }else{
-                log.info("修改状态为：{}",UserStatusEnum.OPEN.getStatus());
-                user.setStatus(UserStatusEnum.OPEN.getCode());
-            }
-            if(baseMapper.updateById(user) > 0) {
-                log.info("用户{}的状态修改成功",user.getUsername());
-                return ResultData.success();
-            }else{
-                log.error("用户{}的状态修改失败",user.getUsername());
-                return ResultData.fail(1013,"用户状态修改失败！");
-            }
+            log.info("修改状态为：{}",UserStatusEnum.OPEN.getStatus());
+            user.setStatus(UserStatusEnum.OPEN.getCode());
+        }
+        if(baseMapper.updateById(user) > 0) {
+            log.info("用户{}的状态修改成功",user.getUsername());
+            return ResultData.success();
+        }else{
+            log.error("用户{}的状态修改失败",user.getUsername());
+            return ResultData.fail(1013,"用户状态修改失败！");
         }
     }
 
@@ -374,8 +374,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     @Override
-    public ResultData deleteUser(Integer id) {
-        log.info("正在删除id为{}的用户",id);
+    public ResultData deleteUser(Integer id) throws SystemException {
+        User user = baseMapper.selectById(id);
+        log.info("正在删除用户：{}",user.getUsername());
         //删除用户角色关联表的数据
         userRoleService.removeByUserId(id);
         //删除用户
