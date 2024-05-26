@@ -38,19 +38,17 @@ public class LoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         //从请求头中获取token
         String token = request.getHeader("authorization");
+        //过滤接口文档token
+        if(StringUtils.equalsIgnoreCase("Basic YWRtaW46YWRtaW4=", token)){
+            return true;
+        }
         if(StringUtils.isEmpty(token)){
             throw new SystemException(ResponseCodeEnum.NEED_LOGIN);
         }
-        if(!StpUtil.getTokenValue().equalsIgnoreCase(token)){
-            throw new SystemException(ResponseCodeEnum.NEED_LOGIN);
-        }
-        long tokenTimeout = StpUtil.getTokenTimeout(token);
-        //tokenTimeout为-2说明此时的token无效
-        if(tokenTimeout == -2){
-            throw new SystemException(ResponseCodeEnum.LOGIN_EXPIRE);
-        }
-        // 检查通过后继续续签
-        StpUtil.updateLastActiveToNow();
+        // 先检查是否已被冻结
+        StpUtil.checkActiveTimeout();
+        // 为指定 Token 续签
+        StpUtil.stpLogic.updateLastActiveToNow(token);
         return true;
     }
 }

@@ -2,9 +2,12 @@ package com.common.controller;
 
 import cn.dev33.satoken.stp.StpUtil;
 import com.common.exception.SystemException;
+import com.common.model.dto.LoginUserDto;
 import com.common.model.entity.User;
 import com.common.response.ResultData;
 import com.common.service.IUserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +25,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
+@Api(tags = "用户管理模块")
 public class UserController {
 
     private final IUserService userService;
@@ -32,6 +36,7 @@ public class UserController {
      * @return
      */
     @GetMapping("/list/{pageNo}/{pageSize}")
+    @ApiOperation(value = "分页查询用户数据")
     public ResultData queryUserList(@PathVariable("pageNo") Integer pageNo,
                                     @PathVariable("pageSize") Integer pageSize,
                                     String username) {
@@ -39,32 +44,65 @@ public class UserController {
         return ResultData.success(map);
     }
 
+    /**
+     * 用户注册
+     * @param
+     * @return
+     */
+    @PostMapping("/register")
+    @ApiOperation(value = "用户注册")
+    public ResultData register(@RequestBody User user) {
+        userService.save(user);
+        return ResultData.success();
+    }
+
+    /**
+     * 用户密码登录
+     * @param user
+     * @return
+     * @throws SystemException
+     */
     @PostMapping("/login")
-    public ResultData login(@RequestBody User user) throws SystemException {
+    @ApiOperation(value = "用户密码登录")
+    public ResultData login(@RequestBody LoginUserDto user) throws SystemException {
        String token = userService.login(user);
         return ResultData.success(token);
     }
 
-    @GetMapping("/info")
-    public ResultData userInfo() throws SystemException {
-        int userId = StpUtil.getLoginIdAsInt();
-        Map<String,Object> map = userService.getUserInfo(userId);
+    /**
+     * 登录获取用户信息
+     * @return
+     * @throws SystemException
+     */
+    @PostMapping("/info")
+    @ApiOperation(value = "登录获取用户信息")
+    public ResultData userInfo(@RequestParam("token") String token) throws SystemException {
+        String userId = (String) StpUtil.getLoginIdByToken(token);
+        Map<String,Object> map = userService.getUserInfo(Integer.parseInt(userId));
         return ResultData.success(map);
     }
 
+    /**
+     * 获取用户角色数据
+     * @param userId
+     * @return
+     * @throws SystemException
+     */
     @GetMapping("/roles/{userId}")
+    @ApiOperation(value = "获取用户角色数据")
     public ResultData queryRoles(@PathVariable("userId") Integer userId) throws SystemException {
         List<String> roles = userService.queryRoles(userId);
         return ResultData.success(roles);
     }
 
     /**
-     * 保存已分配的用户角色
+     * 保存分配的用户角色
      * @param
      * @return
      * @throws SystemException
      */
     @PostMapping("/save/roles/{username}")
+    @ApiOperation(value = "保存分配的用户角色")
     public ResultData saveRoles(@PathVariable("username") String username,
                                 @RequestBody List<String> roles) {
         userService.saveRoles(username,roles);
@@ -72,13 +110,14 @@ public class UserController {
     }
 
     /**
-     * 新增用户
-     * @param
+     * 用户退出登录
      * @return
+     * @throws SystemException
      */
-    @PostMapping("/save")
-    public ResultData saveUser(@RequestBody User user) {
-        userService.save(user);
+    @PostMapping("/logout")
+    @ApiOperation(value = "用户退出登录")
+    public ResultData logout(@RequestParam("token") String token) throws SystemException {
+        StpUtil.logoutByTokenValue(token);
         return ResultData.success();
     }
 }

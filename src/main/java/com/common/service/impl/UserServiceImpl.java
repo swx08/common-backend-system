@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.common.exception.SystemException;
 import com.common.mapper.*;
+import com.common.model.dto.LoginUserDto;
 import com.common.model.dto.UserDto;
 import com.common.model.entity.*;
 import com.common.model.enums.MenuTypeEnum;
@@ -40,7 +41,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     private final RoleMapper roleMapper;
 
     @Override
-    public String login(User user) throws SystemException {
+    public String login(LoginUserDto user) throws SystemException {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         wrapper.eq("username",user.getUsername());
         User selectOne = baseMapper.selectOne(wrapper);
@@ -54,15 +55,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         log.info("用户{}正在登录.....",selectOne.getUsername());
         StpUtil.login(selectOne.getId());
         return StpUtil.getTokenValueByLoginId(selectOne.getId());
-
-//        List<Integer> menuIds = this.findUserMenus(selectOne.getId());
-//        //将菜单数据封装成树形数据格式返回
-//        //List<Tree<String>> treeList = this.buildTree(menuIds);
-//        //只获取路由名称
-//        List<String> routes = menuMapper.selectBatchIds(menuIds).stream().map(Menu::getName).collect(Collectors.toList());
-//        Map<String,Object> map = new HashMap<>();
-//        map.put("routes", routes);
-//        return map;
     }
 
     @Override

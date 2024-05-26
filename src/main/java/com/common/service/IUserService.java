@@ -1,6 +1,7 @@
 package com.common.service;
 
 import com.common.exception.SystemException;
+import com.common.model.dto.LoginUserDto;
 import com.common.model.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -21,7 +22,7 @@ public interface IUserService extends IService<User> {
      * 用户登录
      * @param user
      */
-    String login(User user) throws SystemException;
+    String login(LoginUserDto user) throws SystemException;
 
     Map<String, Object> getUserInfo(Integer userId) throws SystemException;
 
