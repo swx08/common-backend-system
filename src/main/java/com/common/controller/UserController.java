@@ -3,6 +3,7 @@ package com.common.controller;
 import cn.dev33.satoken.stp.StpUtil;
 import com.common.exception.SystemException;
 import com.common.model.dto.LoginUserDto;
+import com.common.model.dto.SearchUserDto;
 import com.common.model.entity.User;
 import com.common.response.ResultData;
 import com.common.service.IUserService;
@@ -39,8 +40,8 @@ public class UserController {
     @ApiOperation(value = "分页查询用户数据")
     public ResultData queryUserList(@PathVariable("pageNo") Integer pageNo,
                                     @PathVariable("pageSize") Integer pageSize,
-                                    String username) {
-        Map<String,Object> map = userService.queryUserList(pageNo,pageSize,username);
+                                    SearchUserDto userDto) {
+        Map<String,Object> map = userService.queryUserList(pageNo,pageSize,userDto);
         return ResultData.success(map);
     }
 

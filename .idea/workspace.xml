@@ -4,16 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="474fd7ce-aec0-4392-b2cc-dfa4ca75158d" name="Changes" comment="删除菜单的同时删除角色菜单关联表数据">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/common/model/dto/LoginUserDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/common/model/enums/UserStatusEnum.java" afterDir="false" />
+    <list default="true" id="474fd7ce-aec0-4392-b2cc-dfa4ca75158d" name="Changes" comment="完善用户登录">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/common/model/dto/SearchUserDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/common/model/vo/UserListVo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/common/config/interceptor/LoginInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/config/interceptor/LoginInterceptor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/common/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/controller/UserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/common/model/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/model/entity/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/common/service/IUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/service/IUserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/common/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/service/impl/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-dev.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,6 +65,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.common.model.vo" />
       <recent name="com.common.model.dto" />
       <recent name="com.common.model.enums" />
     </key>
@@ -88,7 +87,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1716684093218</updated>
-      <workItem from="1716684094671" duration="6359000" />
+      <workItem from="1716684094671" duration="12897000" />
     </task>
     <task id="LOCAL-00001" summary="删除菜单的同时删除角色菜单关联表数据">
       <option name="closed" value="true" />
@@ -98,7 +97,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716687235156</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="完善用户登录">
+      <option name="closed" value="true" />
+      <created>1716695448150</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1716695448150</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -106,6 +113,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="删除菜单的同时删除角色菜单关联表数据" />
-    <option name="LAST_COMMIT_MESSAGE" value="删除菜单的同时删除角色菜单关联表数据" />
+    <MESSAGE value="完善用户登录" />
+    <option name="LAST_COMMIT_MESSAGE" value="完善用户登录" />
   </component>
 </project>

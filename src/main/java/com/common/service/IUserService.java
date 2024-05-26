@@ -2,6 +2,7 @@ package com.common.service;
 
 import com.common.exception.SystemException;
 import com.common.model.dto.LoginUserDto;
+import com.common.model.dto.SearchUserDto;
 import com.common.model.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -30,10 +31,10 @@ public interface IUserService extends IService<User> {
      * 分页查询用户数据
      * @param pageNo
      * @param pageSize
-     * @param username
+     * @param userDto
      * @return
      */
-    Map<String,Object> queryUserList(Integer pageNo, Integer pageSize, String username);
+    Map<String,Object> queryUserList(Integer pageNo, Integer pageSize, SearchUserDto userDto);
 
     List<String> queryRoles(Integer userId);
 

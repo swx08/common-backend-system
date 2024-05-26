@@ -6,15 +6,19 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.common.exception.SystemException;
 import com.common.mapper.*;
 import com.common.model.dto.LoginUserDto;
+import com.common.model.dto.SearchUserDto;
 import com.common.model.dto.UserDto;
 import com.common.model.entity.*;
 import com.common.model.enums.MenuTypeEnum;
+import com.common.model.enums.UserStatusEnum;
+import com.common.model.vo.UserListVo;
 import com.common.response.ResponseCodeEnum;
 import com.common.service.IUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -155,33 +159,27 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     @Override
-    public Map<String,Object> queryUserList(Integer pageNo, Integer pageSize, String username) {
+    public Map<String,Object> queryUserList(Integer pageNo, Integer pageSize, SearchUserDto userDto) {
         Page<User> pageInfo = new Page<User>(pageNo, pageSize);
-        String trimUsername = "";
-        if(!StringUtils.isBlank(username)){
-            trimUsername = username.trim();
-        }
         QueryWrapper<User> wrapper = new QueryWrapper<>();
-        wrapper.eq(!StringUtils.isBlank(trimUsername),"username",trimUsername);
+        wrapper.like(StringUtils.isNotBlank(userDto.getUsername()),"username",userDto.getUsername().trim());
+        wrapper.like(StringUtils.isNotBlank(userDto.getPhone()),"phone",userDto.getPhone().trim());
+        wrapper.eq(null != userDto.getStatus(),"status",userDto.getStatus());
+        wrapper.orderByDesc("create_time");
         Page<User> userPage = baseMapper.selectPage(pageInfo, wrapper);
         if(userPage != null){
+            List<UserListVo> list = new ArrayList<>();
             List<User> userList = userPage.getRecords();
-            List<UserDto> list = new ArrayList<>();
             if(!CollectionUtils.isEmpty(userList)){
                 userList.stream().forEach(user -> {
-                    QueryWrapper<UserRole> queryWrapper = new QueryWrapper<>();
-                    queryWrapper.eq("user_id",user.getId());
-                    List<Integer> roleIds = userRoleMapper.selectList(queryWrapper).stream().map(UserRole::getRoleId).collect(Collectors.toList());
-                    UserDto userDto = new UserDto();
-                    userDto.setId(user.getId());
-                    userDto.setUsername(user.getUsername());
-                    userDto.setPassword(user.getPassword());
-                    if(!CollectionUtils.isEmpty(roleIds)){
-                        //用户已经分配过角色
-                        List<String> roles = roleMapper.selectBatchIds(roleIds).stream().map(Role::getName).collect(Collectors.toList());
-                        userDto.setRoles(roles);
+                    UserListVo userVo = new UserListVo();
+                    BeanUtils.copyProperties(user, userVo);
+                    if(user.getStatus().intValue() == UserStatusEnum.OPEN.getCode()){
+                        userVo.setChecked(true);
+                    }else {
+                        userVo.setChecked(false);
                     }
-                    list.add(userDto);
+                    list.add(userVo);
                 });
                 Map<String,Object> map = new HashMap<>();
                 map.put("data", list);
