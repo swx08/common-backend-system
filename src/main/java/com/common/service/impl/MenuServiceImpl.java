@@ -14,6 +14,7 @@ import com.common.model.enums.MenuStatusEnum;
 import com.common.model.enums.MenuTypeEnum;
 import com.common.response.ResponseCodeEnum;
 import com.common.service.IMenuService;
+import com.common.service.IRoleMenuService;
 import com.common.util.RegexUtils;
 import lombok.RequiredArgsConstructor;
 import com.common.mapper.RoleMenuMapper;
@@ -44,6 +45,8 @@ import java.util.stream.Collectors;
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IMenuService {
 
     private final RoleMenuMapper roleMenuMapper;
+
+    private final IRoleMenuService roleMenuService;
 
     /**
      * 将菜单数据封装成树形数据格式返回
@@ -119,7 +122,8 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
             log.error("id为{}的菜单有子菜单，无法删除...",id);
             throw new SystemException(ResponseCodeEnum.INCLUDE_SUBMENU);
         }
-        //todo: 删除之前应该将角色菜单关联表中的数据也删除
+        //将角色菜单关联表中的数据删除
+        roleMenuService.removeByMenuId(id);
         if(baseMapper.deleteById(id) > 0){
             log.info("id为{}的菜单删除成功！",id);
         }else{

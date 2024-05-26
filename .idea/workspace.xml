@@ -4,11 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e632bd2a-f86d-43ec-aefd-8d863ff5fb26" name="Changes" comment="角色管理模块--角色状态修改">
+    <list default="true" id="474fd7ce-aec0-4392-b2cc-dfa4ca75158d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/JavaSceneConfigState.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/projectInfo.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/projectInfo.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/common/controller/MenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/controller/MenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/common/service/IMenuService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/service/IMenuService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/common/service/IRoleMenuService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/service/IRoleMenuService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/common/service/impl/MenuServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/service/impl/MenuServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/common/service/impl/RoleMenuServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/service/impl/RoleMenuServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-dev.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,6 +22,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
@@ -27,42 +35,29 @@
       </MavenGeneralSettings>
     </option>
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
-    <ConfirmationsSetting value="2" id="Add" />
-  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 6
+}]]></component>
+  <component name="ProjectId" id="2gyyPmO3fMfdsOMBSyzkrqruUKU" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "D:/SpringBoot_Vue_project/common-backend-system",
+    "last_opened_file_path": "D:/SpringBoot_Vue_project/common-backend",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "project.structure.last.edited": "Artifacts",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.32068965",
     "settings.editor.selected.configurable": "File.Encoding",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RecentsManager">
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.common.model.vo" />
-      <recent name="com.common.model.dto" />
-    </key>
-  </component>
   <component name="RunManager">
     <configuration name="BackendCommonApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="common-backend" />
@@ -75,106 +70,16 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="e632bd2a-f86d-43ec-aefd-8d863ff5fb26" name="Changes" comment="" />
-      <created>1716620798532</created>
+      <changelist id="474fd7ce-aec0-4392-b2cc-dfa4ca75158d" name="Changes" comment="" />
+      <created>1716684093218</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1716620798532</updated>
-      <workItem from="1716620801604" duration="25509000" />
+      <updated>1716684093218</updated>
+      <workItem from="1716684094671" duration="1957000" />
     </task>
-    <task id="LOCAL-00001" summary="菜单管理模块开发">
-      <option name="closed" value="true" />
-      <created>1716621152946</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1716621152946</updated>
-    </task>
-    <task id="LOCAL-00002" summary="菜单模糊查询开发--菜单管理开发完成">
-      <option name="closed" value="true" />
-      <created>1716630197770</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1716630197770</updated>
-    </task>
-    <task id="LOCAL-00003" summary="角色管理模块--角色查询">
-      <option name="closed" value="true" />
-      <created>1716636756912</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1716636756912</updated>
-    </task>
-    <task id="LOCAL-00004" summary="角色管理模块--角色新增">
-      <option name="closed" value="true" />
-      <created>1716637951922</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1716637951922</updated>
-    </task>
-    <task id="LOCAL-00005" summary="角色管理模块--角色修改">
-      <option name="closed" value="true" />
-      <created>1716640572802</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1716640572802</updated>
-    </task>
-    <task id="LOCAL-00006" summary="角色管理模块--角色删除">
-      <option name="closed" value="true" />
-      <created>1716643529468</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1716643529468</updated>
-    </task>
-    <task id="LOCAL-00007" summary="角色管理模块--角色状态修改">
-      <option name="closed" value="true" />
-      <created>1716649060711</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1716649060711</updated>
-    </task>
-    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State>
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="main" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </State>
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="菜单管理模块开发" />
-    <MESSAGE value="菜单模糊查询开发--菜单管理开发完成" />
-    <MESSAGE value="角色管理模块--角色查询" />
-    <MESSAGE value="角色管理模块--角色新增" />
-    <MESSAGE value="角色管理模块--角色修改" />
-    <MESSAGE value="角色管理模块--角色删除" />
-    <MESSAGE value="角色管理模块--角色状态修改" />
-    <option name="LAST_COMMIT_MESSAGE" value="角色管理模块--角色状态修改" />
   </component>
 </project>

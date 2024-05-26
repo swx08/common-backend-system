@@ -32,4 +32,16 @@ public class RoleMenuServiceImpl extends ServiceImpl<RoleMenuMapper, RoleMenu> i
             log.warn("此角色无关联菜单数据！");
         }
     }
+
+    @Override
+    public void removeByMenuId(Integer id) {
+        log.info("正在删除id为{}的菜单的角色关联数据...",id);
+        QueryWrapper<RoleMenu> wrapper = new QueryWrapper<>();
+        wrapper.eq("menu_id", id);
+        if(baseMapper.delete(wrapper) > 0){
+            log.info("删除成功！");
+        }else{
+            log.warn("此菜单无角色关联数据！");
+        }
+    }
 }
