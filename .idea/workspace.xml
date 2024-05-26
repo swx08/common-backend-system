@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="474fd7ce-aec0-4392-b2cc-dfa4ca75158d" name="Changes" comment="用户管理--用户注册功能开发">
+    <list default="true" id="474fd7ce-aec0-4392-b2cc-dfa4ca75158d" name="Changes" comment="重置密码功能开发">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/common/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/controller/UserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/common/service/IUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/service/IUserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/common/service/impl/RoleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/service/impl/RoleServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/common/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/service/impl/UserServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -83,7 +85,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1716684093218</updated>
-      <workItem from="1716684094671" duration="25872000" />
+      <workItem from="1716684094671" duration="30636000" />
     </task>
     <task id="LOCAL-00001" summary="删除菜单的同时删除角色菜单关联表数据">
       <option name="closed" value="true" />
@@ -181,7 +183,23 @@
       <option name="project" value="LOCAL" />
       <updated>1716734122126</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="修改只有管理员角色修改用户状态的逻辑，并且管理员登录不做用户状态校验">
+      <option name="closed" value="true" />
+      <created>1716736053160</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1716736053160</updated>
+    </task>
+    <task id="LOCAL-00014" summary="重置密码功能开发">
+      <option name="closed" value="true" />
+      <created>1716737463450</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1716737463450</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -198,6 +216,8 @@
     <MESSAGE value="用户管理--管理员用户状态无权修改" />
     <MESSAGE value="用户管理--完善用户登录逻辑" />
     <MESSAGE value="用户管理--用户注册功能开发" />
-    <option name="LAST_COMMIT_MESSAGE" value="用户管理--用户注册功能开发" />
+    <MESSAGE value="修改只有管理员角色修改用户状态的逻辑，并且管理员登录不做用户状态校验" />
+    <MESSAGE value="重置密码功能开发" />
+    <option name="LAST_COMMIT_MESSAGE" value="重置密码功能开发" />
   </component>
 </project>

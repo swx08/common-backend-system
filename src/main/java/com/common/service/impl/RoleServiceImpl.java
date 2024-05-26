@@ -85,7 +85,10 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
     @Override
     public List<String> queryRoleList() {
         List<String> list = new ArrayList<>();
-        List<Role> roleList = baseMapper.selectList(null);
+        QueryWrapper<Role> wrapper = new QueryWrapper<>();
+        wrapper.eq("status",MenuStatusEnum.OPEN.getCode());
+        wrapper.orderByDesc("create_time");
+        List<Role> roleList = baseMapper.selectList(wrapper);
         if(!CollectionUtils.isEmpty(roleList)){
             roleList.stream().forEach(role -> {
                 list.add(role.getName());
