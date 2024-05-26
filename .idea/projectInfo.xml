@@ -106,6 +106,10 @@
         <option value="Maven: io.springfox:springfox-swagger2:3.0.0" />
         <option value="Maven: io.springfox:springfox-spring-web:3.0.0" />
         <option value="Maven: org.springframework.boot:spring-boot-starter-web:2.7.5" />
+        <option value="Maven: jakarta.validation:jakarta.validation-api:2.0.2" />
+        <option value="Maven: org.jboss.logging:jboss-logging:3.4.3.Final" />
+        <option value="Maven: org.springframework.boot:spring-boot-starter-validation:2.7.5" />
+        <option value="Maven: org.hibernate.validator:hibernate-validator:6.2.5.Final" />
       </list>
     </option>
     <option name="projectName" value="common-backend" />

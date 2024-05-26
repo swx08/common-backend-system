@@ -3,6 +3,7 @@ package com.common.controller;
 import cn.dev33.satoken.stp.StpUtil;
 import com.common.exception.SystemException;
 import com.common.model.dto.LoginUserDto;
+import com.common.model.dto.RegisterUserDto;
 import com.common.model.dto.SearchUserDto;
 import com.common.model.entity.Role;
 import com.common.model.entity.User;
@@ -15,8 +16,10 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +30,7 @@ import java.util.Map;
  */
 @Slf4j
 @CrossOrigin
+@Validated
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
@@ -56,9 +60,11 @@ public class UserController {
      */
     @PostMapping("/register")
     @ApiOperation(value = "用户注册")
-    public ResultData register(@RequestBody User user) {
-        userService.save(user);
-        return ResultData.success();
+    public ResultData register(@RequestBody @Valid RegisterUserDto userDto) throws SystemException {
+        //TODO：修改返回数据，并不一定都是success();
+        //TODO：所有保存的操作在后端都要进行校验，不可轻易相信前端传的数据
+        //TODO：完善日志输出
+        return userService.register(userDto);
     }
 
     /**
