@@ -92,7 +92,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
 
 
     @Override
-    public List<Integer> queryButtonIdsByRoleId(Integer id) {
+    public List<String> queryButtonIdsByRoleId(Integer id) {
         if (id == null) {
             return Collections.emptyList();
         }
@@ -111,13 +111,16 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
             List<Menu> menuList = baseMapper.selectBatchIds(menuIdList);
 
             // 合并流操作，提高效率
-            return menuList.stream()
+            List<Integer> menuIds = menuList.stream()
                     .filter(menu ->
-                        menu.getType() == MenuTypeEnum.BUTTON.getCode() &&
-                        menu.getStatus() == MenuStatusEnum.OPEN.getCode()
+                            menu.getType() == MenuTypeEnum.BUTTON.getCode() &&
+                                    menu.getStatus() == MenuStatusEnum.OPEN.getCode()
                     )
                     .map(Menu::getId)
                     .collect(Collectors.toList());
+            //将menuIds转为String类型
+            return menuIds.stream().map(String::valueOf).collect(Collectors.toList());
+
         }
 
         return Collections.emptyList();

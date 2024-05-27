@@ -83,7 +83,7 @@ public class MenuController {
     @GetMapping("/query/role/permissions")
     @ApiOperation(value = "查询角色的权限数据")
     public ResultData queryRoleMenuList(@RequestParam("id") Integer id) {
-        List<Integer> menuIdList = menuService.queryButtonIdsByRoleId(id);
+        List<String> menuIdList = menuService.queryButtonIdsByRoleId(id);
         return ResultData.success(menuIdList);
     }
 

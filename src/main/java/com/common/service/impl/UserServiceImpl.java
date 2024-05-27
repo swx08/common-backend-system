@@ -137,6 +137,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         QueryWrapper<UserRole> wrapper = new QueryWrapper<>();
         wrapper.eq("user_id",user.getId());
         List<Integer> roleIds = userRoleMapper.selectList(wrapper).stream().map(UserRole::getRoleId).collect(Collectors.toList());
+        Map<String,Object> map = new HashMap<>();
         if(!CollectionUtils.isEmpty(roleIds)){
             //说明此用户已经被管理员分配过角色
             //根据角色ids查询相应的所有目录、菜单、按钮，追后过滤出routes和buttons即可
@@ -160,14 +161,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
                         .collect(Collectors.toList())
                         .stream().map(Menu::getPermission).collect(Collectors.toList());
 
-                Map<String,Object> map = new HashMap<>();
                 map.put("routes", routes);
-                map.put("user", user);
                 map.put("permissions", permissions);
-                return map;
             }
         }
-        return null;
+        map.put("user", user);
+        return map;
     }
 
     private Map<String,Object> queryAdminInfo(User user) {
