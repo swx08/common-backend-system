@@ -13,8 +13,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import com.common.service.IRoleService;
 import org.springframework.beans.BeanUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +29,7 @@ import java.util.Map;
  * @since 2024-04-21
  */
 @Slf4j
+@Validated
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
@@ -69,9 +72,8 @@ public class RoleController {
      */
     @PostMapping("/add")
     @ApiOperation(value = "新增角色")
-    public ResultData saveRole(@RequestBody Role role) throws SystemException {
-        roleService.saveRole(role);
-        return ResultData.success();
+    public ResultData saveRole(@RequestBody @Valid Role role) throws SystemException {
+        return roleService.saveRole(role);
     }
 
     /**
@@ -94,9 +96,8 @@ public class RoleController {
      */
     @PutMapping("/update")
     @ApiOperation(value = "修改角色")
-    public ResultData updateRole(@RequestBody Role role) throws SystemException {
-        roleService.updateRole(role);
-        return ResultData.success();
+    public ResultData updateRole(@RequestBody @Valid Role role) throws SystemException {
+        return roleService.updateRole(role);
     }
 
     /**
@@ -107,8 +108,7 @@ public class RoleController {
     @PutMapping("/update/status/{id}")
     @ApiOperation(value = "修改角色状态")
     public ResultData updateRoleStatus(@PathVariable("id") Integer id) throws SystemException {
-        roleService.updateRoleStatus(id);
-        return ResultData.success();
+        return roleService.updateRoleStatus(id);
     }
 
     /**
@@ -133,7 +133,6 @@ public class RoleController {
     @DeleteMapping("/delete")
     @ApiOperation(value = "删除角色")
     public ResultData deleteRole(@RequestParam("id") Integer id) throws SystemException {
-        roleService.deleteRole(id);
-        return ResultData.success();
+        return roleService.deleteRole(id);
     }
 }

@@ -10,6 +10,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * <p>
  * 
@@ -29,8 +31,10 @@ public class Role implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
+    @NotBlank(message = "角色名称不能为空")
     private String name;
 
+    @NotBlank(message = "角色标识不能为空")
     private String code;
 
     private Integer status;

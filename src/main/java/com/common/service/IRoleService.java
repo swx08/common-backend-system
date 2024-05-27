@@ -4,6 +4,7 @@ import com.common.exception.SystemException;
 import com.common.model.dto.SearchRoleDto;
 import com.common.model.entity.Role;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.common.response.ResultData;
 
 import java.util.List;
 import java.util.Map;
@@ -44,23 +45,23 @@ public interface IRoleService extends IService<Role> {
      * 新增角色
      * @param role
      */
-    void saveRole(Role role) throws SystemException;
+    ResultData saveRole(Role role) throws SystemException;
 
     /**
      * 修改角色
      * @param role
      */
-    void updateRole(Role role) throws SystemException;
+    ResultData updateRole(Role role) throws SystemException;
 
     /**
      * 删除角色
      * @param id
      */
-    void deleteRole(Integer id) throws SystemException;
+    ResultData deleteRole(Integer id) throws SystemException;
 
     /**
      * 修改角色状态
      * @param id
      */
-    void updateRoleStatus(Integer id) throws SystemException;
+    ResultData updateRoleStatus(Integer id) throws SystemException;
 }

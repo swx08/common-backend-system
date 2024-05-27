@@ -39,7 +39,8 @@ public enum ResponseCodeEnum {
     USERNAME_EXITS(1014,"用户名称已存在！"),
     PHONE_EXITS(1015,"手机号已存在！"),
     EMAIL_EXITS(1016,"邮箱已存在！"),
-    USER_FORBIDDEN(1018,"用户已被禁用，请联系管理员恢复！");
+    USER_FORBIDDEN(1018,"用户已被禁用，请联系管理员恢复！"),
+    ROLE_NOT_EXITS(1025,"角色不存在！");
 
     /**
      * 响应码
