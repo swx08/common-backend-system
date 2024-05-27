@@ -37,7 +37,7 @@ public enum MenuStatusEnum {
     /**
      * 构造
      * @param code
-     * @param type
+     * @param status
      * @return
      */
     MenuStatusEnum(int code, String status) {

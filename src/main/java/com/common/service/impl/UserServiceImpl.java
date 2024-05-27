@@ -106,17 +106,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         QueryWrapper<UserRole> wrapper = new QueryWrapper<>();
         wrapper.eq("user_id", userId);
         List<Integer> roleIds = userRoleMapper.selectList(wrapper).stream().map(UserRole::getRoleId).collect(Collectors.toList());
-        boolean isAdmin = false;
         if(!CollectionUtils.isEmpty(roleIds)){
-            isAdmin = this.hasAdminPermission(roleIds);
+            boolean isAdmin = this.hasAdminPermission(roleIds);
+            if(isAdmin){
+                //如果用户名是admin则查询所有的菜单和按钮
+                return this.queryAdminInfo(user);
+            }else{
+                //其他角色的用户查询相应的菜单和按钮
+                return this.queryOtherInfo(user);
+            }
         }
-        if(isAdmin){
-            //如果用户名是admin则查询所有的菜单和按钮
-            return this.queryAdminInfo(user);
-        }else{
-            //其他角色的用户查询相应的菜单和按钮
-            return this.queryOtherInfo(user);
-        }
+        return null;
     }
 
     private boolean hasAdminPermission(List<Integer> roleIds) {
@@ -192,36 +192,38 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     @Override
-    public Map<String,Object> queryUserList(Integer pageNo, Integer pageSize, SearchUserDto userDto) {
-        Page<User> pageInfo = new Page<User>(pageNo, pageSize);
+    public Map<String, Object> queryUserList(Integer pageNo, Integer pageSize, SearchUserDto userDto) {
+        Page<User> pageInfo = new Page<>(pageNo, pageSize);
         QueryWrapper<User> wrapper = new QueryWrapper<>();
-        wrapper.like(StringUtils.isNotBlank(userDto.getUsername()),"username",userDto.getUsername().trim());
-        wrapper.like(StringUtils.isNotBlank(userDto.getPhone()),"phone",userDto.getPhone().trim());
-        wrapper.eq(null != userDto.getStatus(),"status",userDto.getStatus());
+        wrapper.like(StringUtils.isNotBlank(userDto.getUsername()), "username", userDto.getUsername().trim());
+        wrapper.like(StringUtils.isNotBlank(userDto.getPhone()), "phone", userDto.getPhone().trim());
+        wrapper.eq(userDto.getStatus() != null, "status", userDto.getStatus());
         wrapper.orderByDesc("create_time");
+
         Page<User> userPage = baseMapper.selectPage(pageInfo, wrapper);
-        if(userPage != null){
-            List<UserListVo> list = new ArrayList<>();
-            List<User> userList = userPage.getRecords();
-            if(!CollectionUtils.isEmpty(userList)){
-                userList.stream().forEach(user -> {
-                    UserListVo userVo = new UserListVo();
-                    BeanUtils.copyProperties(user, userVo);
-                    if(user.getStatus().intValue() == UserStatusEnum.OPEN.getCode()){
-                        userVo.setChecked(true);
-                    }else {
-                        userVo.setChecked(false);
-                    }
-                    list.add(userVo);
-                });
-                Map<String,Object> map = new HashMap<>();
-                map.put("data", list);
-                map.put("total", userPage.getTotal());
-                return map;
-            }
+        List<User> userList = userPage.getRecords();
+
+        if (!CollectionUtils.isEmpty(userList)) {
+            List<UserListVo> list = convertUserList(userList);
+            Map<String, Object> map = new HashMap<>();
+            map.put("data", list);
+            map.put("total", userPage.getTotal());
+            return map;
         }
         return null;
     }
+
+    private List<UserListVo> convertUserList(List<User> userList) {
+        List<UserListVo> list = new ArrayList<>();
+        userList.forEach(user -> {
+            UserListVo userVo = new UserListVo();
+            BeanUtils.copyProperties(user, userVo);
+            userVo.setChecked(user.getStatus().intValue() == UserStatusEnum.OPEN.getCode());
+            list.add(userVo);
+        });
+        return list;
+    }
+
 
     @Override
     public List<String> queryRoles(Integer userId) {
@@ -250,23 +252,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         try {
             if(!CollectionUtils.isEmpty(userRoles)){
                 //将原先拥有的角色删除
-                List<Integer> roleIds = userRoles.stream().map(UserRole::getRoleId).collect(Collectors.toList());
-                QueryWrapper<UserRole> queryWrapper = new QueryWrapper<>();
-                queryWrapper.eq("user_id",user.getId());
-                queryWrapper.in("role_id",roleIds);
-                userRoleMapper.delete(queryWrapper);
+                deleteOriginalRoles(user,userRoles);
             }
             //保存新的用户角色
             if(!CollectionUtils.isEmpty(roles)){
-                QueryWrapper<Role> queryWrapper = new QueryWrapper<>();
-                queryWrapper.in("name",roles);
-                List<Integer> roleIds = roleMapper.selectList(queryWrapper).stream().map(Role::getId).collect(Collectors.toList());
-                roleIds.stream().forEach(roleId -> {
-                    UserRole userRole = new UserRole();
-                    userRole.setUserId(user.getId());
-                    userRole.setRoleId(roleId);
-                    userRoleMapper.insert(userRole);
-                });
+                saveNewRoles(user,roles);
             }
             return ResultData.success();
         }catch (Exception e) {
@@ -276,25 +266,58 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         }
     }
 
+    private void saveNewRoles(User user, List<String> roles) {
+        QueryWrapper<Role> queryWrapper = new QueryWrapper<>();
+        queryWrapper.in("name",roles);
+        List<Integer> roleIds = roleMapper.selectList(queryWrapper).stream().map(Role::getId).collect(Collectors.toList());
+        roleIds.forEach(roleId -> {
+            UserRole userRole = new UserRole();
+            userRole.setUserId(user.getId());
+            userRole.setRoleId(roleId);
+            userRoleMapper.insert(userRole);
+        });
+    }
+
+    private void deleteOriginalRoles(User user,List<UserRole> userRoles) {
+        List<Integer> roleIds = userRoles.stream().map(UserRole::getRoleId).collect(Collectors.toList());
+        QueryWrapper<UserRole> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_id",user.getId());
+        queryWrapper.in("role_id",roleIds);
+        if(userRoleMapper.delete(queryWrapper) > 0) {
+            log.info("用户{}原先拥有的角色删除成功",user.getUsername());
+        }else {
+            log.error("用户{}原先拥有的角色删除失败",user.getUsername());
+        }
+    }
+
     @Override
     public ResultData updateUserStatus(Integer id) throws SystemException {
         User user = baseMapper.selectById(id);
-        log.info("正在修改用户{}的状态...",user.getUsername());
-        if(user.getStatus().intValue() == UserStatusEnum.OPEN.getCode()) {
-            log.info("修改状态为：{}",UserStatusEnum.CLOSE.getStatus());
-            user.setStatus(UserStatusEnum.CLOSE.getCode());
-        }else{
-            log.info("修改状态为：{}",UserStatusEnum.OPEN.getStatus());
-            user.setStatus(UserStatusEnum.OPEN.getCode());
+        if (user == null) {
+            log.error("用户不存在，无法修改状态");
+            return ResultData.fail(1029, "用户不存在！");
         }
-        if(baseMapper.updateById(user) > 0) {
-            log.info("用户{}的状态修改成功",user.getUsername());
+        log.info("正在修改用户{}的状态...",user.getUsername());
+
+        UserStatusEnum newStatus;
+        if (user.getStatus().intValue() == UserStatusEnum.OPEN.getCode()) {
+            newStatus = UserStatusEnum.CLOSE;
+            log.info("修改状态为：{}", newStatus.getStatus());
+        } else {
+            newStatus = UserStatusEnum.OPEN;
+            log.info("修改状态为：{}", newStatus.getStatus());
+        }
+        user.setStatus(newStatus.getCode());
+
+        if (baseMapper.updateById(user) > 0) {
+            log.info("用户{}的状态修改成功", user.getUsername());
             return ResultData.success();
-        }else{
-            log.error("用户{}的状态修改失败",user.getUsername());
-            return ResultData.fail(1013,"用户状态修改失败！");
+        } else {
+            log.error("用户{}的状态修改失败", user.getUsername());
+            return ResultData.fail(1013, "用户状态修改失败！");
         }
     }
+
 
     /**
      * 拥有管理员角色的用户无权修改
@@ -414,6 +437,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         BeanUtils.copyProperties(userDto,user);
         if(baseMapper.insert(user) > 0){
             log.info("用户{}注册成功！",userDto.getUsername());
+            //TODO:用户注册成功后，应该默认分配一个普通用户角色。
             return ResultData.success();
         }else {
             log.error("用户{}注册失败！",userDto.getUsername());

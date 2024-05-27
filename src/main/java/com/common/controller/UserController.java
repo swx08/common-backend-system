@@ -62,10 +62,6 @@ public class UserController {
     @PostMapping("/register")
     @ApiOperation(value = "用户注册")
     public ResultData register(@RequestBody @Valid RegisterUserDto userDto) throws SystemException {
-        //TODO：修改返回数据，并不一定都是success();
-        //TODO：所有保存的操作在后端都要进行校验，不可轻易相信前端传的数据
-        //TODO：完善日志输出
-        //TODO：代码优化
         return userService.register(userDto);
     }
 
@@ -77,7 +73,7 @@ public class UserController {
      */
     @PostMapping("/login")
     @ApiOperation(value = "用户密码登录")
-    public ResultData login(@RequestBody LoginUserDto user) throws SystemException {
+    public ResultData login(@RequestBody @Valid LoginUserDto user) throws SystemException {
        String token = userService.login(user);
         return ResultData.success(token);
     }
@@ -128,7 +124,7 @@ public class UserController {
      */
     @PutMapping("/update")
     @ApiOperation(value = "修改用户")
-    public ResultData updateUser(@RequestBody EchoUserVo userVo) throws SystemException {
+    public ResultData updateUser(@RequestBody @Valid EchoUserVo userVo) throws SystemException {
         return userService.updateUser(userVo);
     }
 

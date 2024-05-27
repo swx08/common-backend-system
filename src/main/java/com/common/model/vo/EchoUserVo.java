@@ -9,7 +9,9 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
+import java.lang.reflect.Member;
 import java.time.LocalDateTime;
 
 /**
@@ -31,9 +33,12 @@ public class EchoUserVo implements Serializable {
 
     private Integer id;
 
+    @NotBlank(message = "用户名不能为空")
     private String username;
 
+    @NotBlank(message = "手机号不能为空")
     private String phone;
 
+    @NotBlank(message = "邮箱不能为空")
     private String email;
 }

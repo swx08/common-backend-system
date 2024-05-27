@@ -111,15 +111,13 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
             List<Menu> menuList = baseMapper.selectBatchIds(menuIdList);
 
             // 合并流操作，提高效率
-            List<Integer> buttonIds = menuList.stream()
+            return menuList.stream()
                     .filter(menu ->
                         menu.getType() == MenuTypeEnum.BUTTON.getCode() &&
                         menu.getStatus() == MenuStatusEnum.OPEN.getCode()
                     )
                     .map(Menu::getId)
                     .collect(Collectors.toList());
-
-            return buttonIds;
         }
 
         return Collections.emptyList();
