@@ -13,6 +13,7 @@ import com.common.model.entity.Role;
 import com.common.model.enums.MenuStatusEnum;
 import com.common.model.enums.MenuTypeEnum;
 import com.common.response.ResponseCodeEnum;
+import com.common.response.ResultData;
 import com.common.service.IMenuService;
 import com.common.service.IRoleMenuService;
 import com.common.util.RegexUtils;
@@ -25,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
@@ -125,25 +127,31 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
 
 
     @Override
-    public void addMenu(AddMenuDto menu) throws SystemException {
+    public ResultData addMenu(AddMenuDto menu) throws SystemException {
         //校验菜单权限标识和组件路径是否符合命名规范
-        log.info("新增菜单：校验菜单权限标识和组件路径是否符合命名规范...");
         verifyMenuName(menu);
-        log.info("新增菜单：校验通过！");
+
         //校验菜单名称和组件名称唯一
-        log.info("新增菜单：校验菜单名称和组件名称唯一...");
         verifyMenuUnique(menu);
-        log.info("新增菜单：校验通过！");
-        //插入菜单数据
+
         Menu saveMenu = new Menu();
         //设置父级菜单id
         handleParentId(menu);
         BeanUtils.copyProperties(menu,saveMenu);
-        baseMapper.insert(saveMenu);
+
+        //插入菜单数据
+        if(baseMapper.insert(saveMenu) > 0){
+            log.info("菜单{}新增成功！",saveMenu.getName());
+            return ResultData.success();
+        }else{
+            log.error("菜单{}新增失败！",saveMenu.getName());
+            return ResultData.fail(1020,"新增菜单失败！");
+        }
     }
 
     @Override
-    public void deleteMenu(Integer id) throws SystemException {
+    @Transactional(rollbackFor = Exception.class)
+    public ResultData deleteMenu(Integer id) throws SystemException {
         log.info("正在删除id为{}的菜单...",id);
         //要删除的菜单如果有子菜单则提示不能删除
         QueryWrapper<Menu> wrapper = new QueryWrapper<>();
@@ -156,9 +164,10 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
         roleMenuService.removeByMenuId(id);
         if(baseMapper.deleteById(id) > 0){
             log.info("id为{}的菜单删除成功！",id);
+            return ResultData.success();
         }else{
             log.error("id为{}的菜单删除失败！",id);
-            throw new SystemException(ResponseCodeEnum.SYSTEM_ERROR);
+            return ResultData.fail(1022,"菜单删除失败！");
         }
     }
 
@@ -183,67 +192,86 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
     }
 
     @Override
-    public void updateMenu(AddMenuDto menu) throws SystemException {
+    public ResultData updateMenu(AddMenuDto menu) throws SystemException {
         //校验菜单权限标识和组件路径是否符合命名规范
-        log.info("修改菜单：校验菜单权限标识和组件路径是否符合命名规范...");
         verifyMenuName(menu);
-        log.info("修改菜单：校验通过！");
+
         //校验菜单名称和组件名称唯一
-        log.info("修改菜单：校验菜单名称和组件名称唯一...");
         verifyMenuUniqueWithUpdate(menu);
-        log.info("修改菜单：校验通过！");
+
         Menu updateMenu = baseMapper.selectById(menu.getId());
         BeanUtils.copyProperties(menu,updateMenu);
-        log.info("要修改的菜单数据为：{}",updateMenu);
-        baseMapper.updateById(updateMenu);
+        //修改菜单数据
+        if(baseMapper.updateById(updateMenu) > 0){
+            log.info("菜单{}修改成功！",updateMenu.getName());
+            return ResultData.success();
+        }else{
+            log.error("菜单{}修改失败！",updateMenu.getName());
+            return ResultData.fail(1021,"新增修改失败！");
+        }
     }
 
     @Override
     public List<AddMenuDto> queryMenuListByLike(SearchMenuDto menuDto) {
-        //查询菜单数据
+        // 查询菜单数据
         log.info("模糊查询菜单数据...");
         QueryWrapper<Menu> wrapper = new QueryWrapper<>();
-        //模糊查询
-        wrapper.like(!StringUtils.isBlank(menuDto.getTitle()),"title",menuDto.getTitle().trim());
-        wrapper.eq(null != menuDto.getType(),"type",menuDto.getType());
-        wrapper.eq(null != menuDto.getStatus(),"status",menuDto.getStatus());
+        String title = menuDto.getTitle();
+        // 模糊查询，增加对title为空的防御性处理
+        if (!StringUtils.isBlank(title)) {
+            wrapper.like("title", title.trim());
+        }
+        wrapper.eq(null != menuDto.getType(), "type", menuDto.getType());
+        wrapper.eq(null != menuDto.getStatus(), "status", menuDto.getStatus());
         List<Menu> menuList = baseMapper.selectList(wrapper);
-        if(!CollectionUtils.isEmpty(menuList)){
-            List<AddMenuDto> list = new ArrayList<AddMenuDto>();
-            menuList.stream().forEach(menu -> {
+        if (!CollectionUtils.isEmpty(menuList)) {
+            List<AddMenuDto> list = new ArrayList<>();
+            menuList.forEach(menu -> {
                 AddMenuDto addMenuDto = new AddMenuDto();
-                BeanUtils.copyProperties(menu,addMenuDto);
+                BeanUtils.copyProperties(menu, addMenuDto);
                 list.add(addMenuDto);
             });
             return list;
+        } else {
+            return Collections.emptyList();
         }
-        return null;
     }
+
 
     @Override
     public List<Tree<String>> queryMenuListWithPermission() {
-        //查询菜单数据
+        // 查询菜单数据
         log.info("查询分配权限菜单数据...");
         QueryWrapper<Menu> wrapper = new QueryWrapper<>();
-        wrapper.eq("status",MenuStatusEnum.OPEN.getCode());
+        wrapper.eq("status", MenuStatusEnum.OPEN.getCode());
         wrapper.orderByDesc("create_time");
         List<Menu> menusList = baseMapper.selectList(wrapper);
         TreeNodeConfig treeNodeConfig = new TreeNodeConfig();
         // 最大递归深度
         treeNodeConfig.setDeep(3);
-        List<Tree<String>> treeNodes = TreeUtil.build(menusList, "0", treeNodeConfig,
-                (treeNode, tree) -> {
-                    //这俩属性必须设置
-                    tree.setId(treeNode.getId().toString());
-                    tree.setParentId(treeNode.getParentId().toString());
-                    // 扩展属性 ...
-                    tree.putExtra("key", treeNode.getId());
-                    tree.putExtra("title", treeNode.getTitle());
-                });
+        List<Tree<String>> treeNodes = buildTreeWithPermission(menusList, treeNodeConfig);
         return treeNodes;
     }
 
+    private List<Tree<String>> buildTreeWithPermission(List<Menu> menusList, TreeNodeConfig treeNodeConfig) {
+        return TreeUtil.build(menusList, "0", treeNodeConfig, this::populateTreeNodeWithPermission);
+    }
+
+    private void populateTreeNodeWithPermission(Menu treeNode, Tree<String> tree) {
+        // 避免空指针，进行必要的空检查
+        String id = Optional.ofNullable(treeNode.getId()).map(Object::toString).orElse(null);
+        String parentId = Optional.ofNullable(treeNode.getParentId()).map(Object::toString).orElse(null);
+
+        tree.setId(id);
+        tree.setParentId(parentId);
+        // 扩展属性 ...
+        tree.putExtra("key", id);
+        tree.putExtra("title", treeNode.getTitle());
+    }
+
+
     private void verifyMenuUniqueWithUpdate(AddMenuDto menu) throws SystemException {
+        log.info("修改菜单：校验菜单名称和组件名称唯一...");
         QueryWrapper<Menu> wrapper = new QueryWrapper<>();
         wrapper.eq("name", menu.getName());
         Menu selectOne = baseMapper.selectOne(wrapper);
@@ -258,6 +286,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
             log.error("菜单名称已存在，修改失败...");
             throw new SystemException(ResponseCodeEnum.MENU_TITLE_EXITS);
         }
+        log.info("修改菜单：校验菜单名称和组件名称唯一通过");
     }
 
     /**
@@ -286,6 +315,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
      * @param menu
      */
     private void verifyMenuName(AddMenuDto menu) throws SystemException {
+        log.info("{}菜单：校验菜单权限标识和组件路径是否符合命名规范...",menu.getTitle());
         if(!StringUtils.isBlank(menu.getPermission())){
             if(!RegexUtils.verifyMenuPermission(menu.getPermission())) {
                 log.error("校验菜单权限标识命名规范不通过...");
@@ -300,6 +330,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
                 throw new SystemException(ResponseCodeEnum.COMPONENT_NAME_ILLEGAL);
             }
         }
+        log.info("{}菜单：校验菜单权限标识和组件路径是否符合命名规范通过！",menu.getTitle());
     }
 
     /**
@@ -308,6 +339,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
      * @return
      */
     private void verifyMenuUnique(AddMenuDto menu) throws SystemException {
+        log.info("新增菜单：校验菜单名称和组件名称唯一...");
         QueryWrapper<Menu> wrapper = new QueryWrapper<>();
         wrapper.eq("name", menu.getName());
         if(!CollectionUtils.isEmpty(baseMapper.selectList(wrapper))) {
@@ -320,5 +352,6 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
             log.error("菜单名称已存在...");
             throw new SystemException(ResponseCodeEnum.MENU_TITLE_EXITS);
         }
+        log.info("新增{}菜单：校验菜单名称和组件名称唯一通过！",menu.getName());
     }
 }

@@ -7,6 +7,7 @@ import com.common.model.dto.SearchMenuDto;
 import com.common.model.entity.Menu;
 import com.common.model.entity.Role;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.common.response.ResultData;
 
 import java.util.List;
 
@@ -35,13 +36,13 @@ public interface IMenuService extends IService<Menu> {
      * 新增菜单
      * @param menu
      */
-    void addMenu(AddMenuDto menu) throws SystemException;
+    ResultData addMenu(AddMenuDto menu) throws SystemException;
 
     /**
      * 删除菜单
      * @param id
      */
-    void deleteMenu(Integer id) throws SystemException;
+    ResultData deleteMenu(Integer id) throws SystemException;
 
     /**
      * 菜单数据回显
@@ -54,7 +55,7 @@ public interface IMenuService extends IService<Menu> {
      * 修改菜单
      * @param menu
      */
-    void updateMenu(AddMenuDto menu) throws SystemException;
+    ResultData updateMenu(AddMenuDto menu) throws SystemException;
 
     /**
      * 模糊查询菜单数据

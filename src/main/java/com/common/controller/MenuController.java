@@ -14,8 +14,10 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -28,6 +30,7 @@ import java.util.List;
  */
 @Slf4j
 @CrossOrigin
+@Validated
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/menu")
@@ -92,8 +95,7 @@ public class MenuController {
     @PostMapping("/add")
     @ApiOperation(value = "新增菜单")
     public ResultData addMenu(@RequestBody AddMenuDto menu) throws SystemException {
-        menuService.addMenu(menu);
-        return ResultData.success();
+        return menuService.addMenu(menu);
     }
 
     /**
@@ -104,8 +106,7 @@ public class MenuController {
     @PutMapping("/update")
     @ApiOperation(value = "修改菜单")
     public ResultData updateMenu(@RequestBody AddMenuDto menu) throws SystemException {
-        menuService.updateMenu(menu);
-        return ResultData.success();
+        return menuService.updateMenu(menu);
     }
 
     /**
@@ -128,7 +129,6 @@ public class MenuController {
     @DeleteMapping("/delete")
     @ApiOperation(value = "删除菜单")
     public ResultData deleteMenu(@RequestParam("id") Integer id) throws SystemException {
-        menuService.deleteMenu(id);
-        return ResultData.success();
+        return menuService.deleteMenu(id);
     }
 }
