@@ -29,7 +29,7 @@ public interface IMenuService extends IService<Menu> {
      * 查询当前角色所拥有的所有的菜单以及按钮权限
      * @return
      */
-    List<Integer> queryRoleMenuList(Integer id);
+    List<Integer> queryButtonIdsByRoleId(Integer id);
 
     /**
      * 新增菜单
@@ -48,7 +48,7 @@ public interface IMenuService extends IService<Menu> {
      * @param id
      * @return
      */
-    AddMenuDto echoMenu(Integer id);
+    AddMenuDto getMenuAsDto(Integer id);
 
     /**
      * 修改菜单

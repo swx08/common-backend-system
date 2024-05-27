@@ -80,7 +80,7 @@ public class MenuController {
     @GetMapping("/query/role/permissions")
     @ApiOperation(value = "查询角色的权限数据")
     public ResultData queryRoleMenuList(@RequestParam("id") Integer id) {
-        List<Integer> menuIdList = menuService.queryRoleMenuList(id);
+        List<Integer> menuIdList = menuService.queryButtonIdsByRoleId(id);
         return ResultData.success(menuIdList);
     }
 
@@ -116,7 +116,7 @@ public class MenuController {
     @GetMapping("/echo")
     @ApiOperation(value = "菜单数据回显")
     public ResultData echoMenu(@RequestParam("id") Integer id) throws SystemException {
-        AddMenuDto menu = menuService.echoMenu(id);
+        AddMenuDto menu = menuService.getMenuAsDto(id);
         return ResultData.success(menu);
     }
 

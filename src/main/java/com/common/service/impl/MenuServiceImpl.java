@@ -28,7 +28,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -61,38 +63,66 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
         TreeNodeConfig treeNodeConfig = new TreeNodeConfig();
         // 最大递归深度
         treeNodeConfig.setDeep(3);
-        List<Tree<String>> treeNodes = TreeUtil.build(menusList, "0", treeNodeConfig,
-                (treeNode, tree) -> {
-                    //这俩属性必须设置
-                    tree.setId(treeNode.getId().toString());
-                    tree.setParentId(treeNode.getParentId().toString());
-                    // 扩展属性 ...
-                    tree.putExtra("key", treeNode.getId());
-                    tree.putExtra("type", treeNode.getType());
-                    tree.putExtra("name", treeNode.getName());
-                    tree.putExtra("title", treeNode.getTitle());
-                    tree.putExtra("permission", treeNode.getPermission());
-                    tree.putExtra("component", treeNode.getComponent());
-                    tree.putExtra("status", treeNode.getStatus());
-                });
+        List<Tree<String>> treeNodes = buildTree(menusList, treeNodeConfig);
         return treeNodes;
     }
 
+    private List<Tree<String>> buildTree(List<Menu> menusList, TreeNodeConfig treeNodeConfig) {
+        return TreeUtil.build(menusList, "0", treeNodeConfig, this::populateTreeNode);
+    }
+
+    private void populateTreeNode(Menu treeNode, Tree<String> tree) {
+        // 避免空指针，进行必要的空检查
+        String id = Optional.ofNullable(treeNode.getId()).map(Object::toString).orElse(null);
+        String parentId = Optional.ofNullable(treeNode.getParentId()).map(Object::toString).orElse(null);
+
+        tree.setId(id);
+        tree.setParentId(parentId);
+        // 扩展属性 ...
+        tree.putExtra("key", id);
+        tree.putExtra("type", treeNode.getType());
+        tree.putExtra("name", treeNode.getName());
+        tree.putExtra("title", treeNode.getTitle());
+        tree.putExtra("permission", treeNode.getPermission());
+        tree.putExtra("component", treeNode.getComponent());
+        tree.putExtra("status", treeNode.getStatus());
+    }
+
+
     @Override
-    public List<Integer> queryRoleMenuList(Integer id) {
+    public List<Integer> queryButtonIdsByRoleId(Integer id) {
+        if (id == null) {
+            return Collections.emptyList();
+        }
+
         QueryWrapper<RoleMenu> wrapper = new QueryWrapper<>();
         wrapper.eq("role_id", id);
+
+        // 检查Mapper是否为null，避免空指针异常
+        if (roleMenuMapper == null || baseMapper == null) {
+            return Collections.emptyList();
+        }
+
         List<RoleMenu> roleMenus = roleMenuMapper.selectList(wrapper);
-        if(!CollectionUtils.isEmpty(roleMenus)) {
+        if (!CollectionUtils.isEmpty(roleMenus)) {
             List<Integer> menuIdList = roleMenus.stream().map(RoleMenu::getMenuId).collect(Collectors.toList());
             List<Menu> menuList = baseMapper.selectBatchIds(menuIdList);
-            List<Integer> buttonIds = menuList.stream().filter(menu -> (menu.getType() == MenuTypeEnum.BUTTON.getCode()) && (menu.getStatus() == MenuStatusEnum.OPEN.getCode()))
-                    .collect(Collectors.toList())
-                    .stream().map(Menu::getId).collect(Collectors.toList());
+
+            // 合并流操作，提高效率
+            List<Integer> buttonIds = menuList.stream()
+                    .filter(menu ->
+                        menu.getType() == MenuTypeEnum.BUTTON.getCode() &&
+                        menu.getStatus() == MenuStatusEnum.OPEN.getCode()
+                    )
+                    .map(Menu::getId)
+                    .collect(Collectors.toList());
+
             return buttonIds;
         }
-        return null;
+
+        return Collections.emptyList();
     }
+
 
     @Override
     public void addMenu(AddMenuDto menu) throws SystemException {
@@ -133,18 +163,19 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
     }
 
     @Override
-    public AddMenuDto echoMenu(Integer id) {
-        if(null != id){
+    public AddMenuDto getMenuAsDto(Integer id) {
+        if (id != null) {
             Menu menu = baseMapper.selectById(id);
-            if(null != menu){
+            if (menu != null) {
                 AddMenuDto menuDto = new AddMenuDto();
                 Menu parentMenu = baseMapper.selectById(menu.getParentId());
-                if(null != parentMenu){
+                if (parentMenu != null) {
                     menuDto.setParent(parentMenu.getTitle());
-                }else{
+                } else {
+                    // 根据业务需求，可以调整默认值或移除该else块
                     menuDto.setParent("主类目");
                 }
-                BeanUtils.copyProperties(menu,menuDto);
+                BeanUtils.copyProperties(menu, menuDto);
                 return menuDto;
             }
         }
