@@ -15,6 +15,7 @@ import com.common.exception.SystemException;
 import com.common.response.ResponseCodeEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
  * 自定义配置请求拦截器，所有的请求都会先通过这里
  */
 @Slf4j
+@Component
 public class LoginInterceptor implements HandlerInterceptor {
 
     /**

@@ -1,5 +1,10 @@
 package com.common.config.interceptor;
 
+import cn.dev33.satoken.interceptor.SaInterceptor;
+import cn.dev33.satoken.router.SaRouter;
+import cn.dev33.satoken.stp.StpInterface;
+import cn.dev33.satoken.stp.StpUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -20,6 +25,9 @@ import java.util.List;
 @Configuration
 public class LoginInterceptorConfig implements WebMvcConfigurer {
 
+    @Autowired
+    private LoginInterceptor loginInterceptor;
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         //所谓白名单就是用户没有登录就可以访问的路径
@@ -35,17 +43,12 @@ public class LoginInterceptorConfig implements WebMvcConfigurer {
         // 器的注册,后面的addPathPatterns表示拦截哪些url
         //这里的参数/**表示所有请求,再后面的excludePathPatterns表
         // 示有哪些是白名单,且参数是列表
-        registry.addInterceptor(loginInterceptor())
+        registry.addInterceptor(loginInterceptor)
                 .addPathPatterns("/**")
                 .excludePathPatterns(patters);
-    }
 
-    /**
-     * 这是自定义的拦截器交给spring管理
-     * @return
-     */
-    @Bean
-    public LoginInterceptor loginInterceptor() {
-        return new LoginInterceptor();
+        registry.addInterceptor(new SaInterceptor())
+                .addPathPatterns("/**")
+                .excludePathPatterns(patters);
     }
 }

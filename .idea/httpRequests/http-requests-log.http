@@ -1,0 +1,130 @@
+GET http://localhost:9100/user/roles/1
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Cookie: authorization=f2e87df8-4e76-4167-83d3-2e1345b897a2
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-28T151506.200.json
+
+###
+
+GET http://localhost:9100/user/roles/1
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Cookie: authorization=f2e87df8-4e76-4167-83d3-2e1345b897a2
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-28T151436.200.json
+
+###
+
+GET http://localhost:9100/user/roles/1
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Cookie: authorization=f2e87df8-4e76-4167-83d3-2e1345b897a2
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-28T004140.200.txt
+
+###
+
+POST http://localhost:9100/user/login?username=admin&password=admin
+Content-Length: 0
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Cookie: authorization=f2e87df8-4e76-4167-83d3-2e1345b897a2
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-28T004123.200.json
+
+###
+
+POST http://localhost:9100/user/login?username=admin&password=admin
+Content-Length: 0
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Cookie: authorization=f2e87df8-4e76-4167-83d3-2e1345b897a2
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-28T003312.200.json
+
+###
+
+GET http://localhost:9100/user/roles/1
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Cookie: authorization=f2e87df8-4e76-4167-83d3-2e1345b897a2
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-28T003140.200.txt
+
+###
+
+GET http://localhost:9100/user/roles/1
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Cookie: authorization=f2e87df8-4e76-4167-83d3-2e1345b897a2
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-28T003007.200.txt
+
+###
+
+GET http://localhost:9100/user/roles/1
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Cookie: authorization=f2e87df8-4e76-4167-83d3-2e1345b897a2
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-28T002846.500.json
+
+###
+
+POST http://localhost:9100/user/login?username=管理员&password=123456
+Content-Length: 0
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-28T002706.200.json
+
+###
+
+POST http://localhost:9100/user/login?username=admin&password=123456
+Content-Length: 0
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-28T002624.200.json
+
+###
+
+POST http://localhost:9100/user/login?username=admin&password=123456
+Content-Length: 0
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-28T002527.200.json
+
+###
+
+GET http://localhost:9100/user/roles/1
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-28T002443.200.txt
+
+###
+
+GET http://localhost:9100/user/roles/1
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-28T001945.200.json
+
+###
+

@@ -4,17 +4,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="474fd7ce-aec0-4392-b2cc-dfa4ca75158d" name="Changes" comment="代码优化：用户管理模块">
+    <list default="true" id="474fd7ce-aec0-4392-b2cc-dfa4ca75158d" name="Changes" comment="代码优化：菜单管理模块">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/common/service/impl/PermissionImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/JavaSceneConfigState.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/JavaSceneConfigState.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/common/controller/MenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/controller/MenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/common/service/IMenuService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/service/IMenuService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/common/service/impl/MenuServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/service/impl/MenuServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/common/config/interceptor/LoginInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/config/interceptor/LoginInterceptor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/common/config/interceptor/LoginInterceptorConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/config/interceptor/LoginInterceptorConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/common/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/common/exception/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/common/response/ResponseCodeEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/response/ResponseCodeEnum.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/common/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/service/impl/UserServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -69,7 +80,22 @@
       <recent name="com.common.model.enums" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Spring Boot.BackendCommonApplication">
+    <configuration name="generated-requests | #1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" requestIdentifier="#1" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="generated-requests | #2" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="2" requestIdentifier="#2" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="generated-requests | #3" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="3" requestIdentifier="#3" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="generated-requests | #4" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="4" requestIdentifier="#4" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="generated-requests | #5" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="5" requestIdentifier="#5" runType="Run single request">
+      <method v="2" />
+    </configuration>
     <configuration name="BackendCommonApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="common-backend" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.common.BackendCommonApplication" />
@@ -77,6 +103,15 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="HTTP Request.generated-requests | #1" />
+        <item itemvalue="HTTP Request.generated-requests | #2" />
+        <item itemvalue="HTTP Request.generated-requests | #3" />
+        <item itemvalue="HTTP Request.generated-requests | #5" />
+        <item itemvalue="HTTP Request.generated-requests | #4" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -92,7 +127,7 @@
       <workItem from="1716780708031" duration="407000" />
       <workItem from="1716781125910" duration="184000" />
       <workItem from="1716785062196" duration="6277000" />
-      <workItem from="1716808382320" duration="5854000" />
+      <workItem from="1716808382320" duration="18205000" />
     </task>
     <task id="LOCAL-00001" summary="删除菜单的同时删除角色菜单关联表数据">
       <option name="closed" value="true" />
@@ -238,7 +273,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716812250053</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="代码优化：菜单管理模块">
+      <option name="closed" value="true" />
+      <created>1716815492730</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1716815492730</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -270,9 +313,9 @@
     <MESSAGE value="用户分配角色功能开发完成" />
     <MESSAGE value="Merge remote-tracking branch 'common-backend-system/main'&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml" />
     <MESSAGE value="优化代码" />
-    <MESSAGE value="代码优化：菜单管理模块" />
     <MESSAGE value="代码优化：用户管理模块" />
-    <option name="LAST_COMMIT_MESSAGE" value="代码优化：用户管理模块" />
+    <MESSAGE value="代码优化：菜单管理模块" />
+    <option name="LAST_COMMIT_MESSAGE" value="代码优化：菜单管理模块" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

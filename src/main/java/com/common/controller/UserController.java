@@ -1,5 +1,6 @@
 package com.common.controller;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.dev33.satoken.stp.StpUtil;
 import com.common.exception.SystemException;
 import com.common.model.dto.LoginUserDto;
@@ -47,6 +48,7 @@ public class UserController {
      */
     @GetMapping("/list/{pageNo}/{pageSize}")
     @ApiOperation(value = "分页查询用户数据")
+    @SaCheckPermission("permission:user:list")
     public ResultData queryUserList(@PathVariable("pageNo") Integer pageNo,
                                     @PathVariable("pageSize") Integer pageSize,
                                     SearchUserDto userDto) {
@@ -124,6 +126,7 @@ public class UserController {
      */
     @PutMapping("/update")
     @ApiOperation(value = "修改用户")
+    @SaCheckPermission("permission:user:update")
     public ResultData updateUser(@RequestBody @Valid EchoUserVo userVo) throws SystemException {
         return userService.updateUser(userVo);
     }

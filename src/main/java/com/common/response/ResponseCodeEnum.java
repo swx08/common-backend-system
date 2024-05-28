@@ -22,6 +22,7 @@ public enum ResponseCodeEnum {
     NEED_LOGIN(402,"需要登录后操作"),
     LOGIN_EXPIRE(405,"登录过期，请重新登录！"),
     SYSTEM_ERROR(500,"服务器开小差，稍后重试"),
+    NO_PERMISSION(406,"无此权限！"),
 
     //业务码
     ADMIN_NORMAL(1001,"状态正常，无法删除！"),

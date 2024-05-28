@@ -157,7 +157,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
                         .collect(Collectors.toList())
                         .stream().map(Menu::getName).collect(Collectors.toList());
                 List<String> permissions = menuList.stream()
-                        .filter(menu -> menu.getType() == MenuTypeEnum.BUTTON.getCode())
+                        .filter(menu -> (menu.getType() == MenuTypeEnum.BUTTON.getCode()) || (menu.getType() == MenuTypeEnum.MENU.getCode()))
                         .collect(Collectors.toList())
                         .stream().map(Menu::getPermission).collect(Collectors.toList());
 
@@ -180,7 +180,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
         //获取所有的按钮
         QueryWrapper<Menu> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("type", MenuTypeEnum.BUTTON.getCode());
+        queryWrapper.eq("type", MenuTypeEnum.BUTTON.getCode())
+                        .or()
+                    .eq("type", MenuTypeEnum.MENU.getCode());
         List<String> permissions = menuMapper.selectList(queryWrapper).stream().map(Menu::getPermission).collect(Collectors.toList());
 
         Map<String,Object> map = new HashMap<>();
