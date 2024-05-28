@@ -49,7 +49,7 @@ public class UserController {
      */
     @GetMapping("/list/{pageNo}/{pageSize}")
     @ApiOperation(value = "分页查询用户数据")
-    @SaCheckPermission("permission:user:list")
+    @SaCheckPermission(value = "permission:user:list",orRole = {"admin","common","test"})
     public ResultData queryUserList(@PathVariable("pageNo") Integer pageNo,
                                     @PathVariable("pageSize") Integer pageSize,
                                     SearchUserDto userDto) {
@@ -102,6 +102,7 @@ public class UserController {
      */
     @GetMapping("/roles/{userId}")
     @ApiOperation(value = "获取角色名称")
+    @SaCheckPermission(value = "permission:user:assign",orRole = {"admin"})
     public ResultData queryRoles(@PathVariable("userId") Integer userId) throws SystemException {
         List<String> roles = userService.queryRoles(userId);
         return ResultData.success(roles);
@@ -115,6 +116,7 @@ public class UserController {
      */
     @PostMapping("/save/roles/{username}")
     @ApiOperation(value = "保存分配的用户角色")
+    @SaCheckPermission(value = "permission:user:assign",orRole = {"admin"})
     public ResultData saveRoles(@PathVariable("username") String username,
                                 @RequestBody List<String> roles) {
         return userService.saveRoles(username,roles);
@@ -127,7 +129,7 @@ public class UserController {
      */
     @PutMapping("/update")
     @ApiOperation(value = "修改用户")
-    @SaCheckPermission("permission:user:update")
+    @SaCheckPermission(value = "permission:user:update",orRole = {"admin"})
     public ResultData updateUser(@RequestBody @Valid EchoUserVo userVo) throws SystemException {
         return userService.updateUser(userVo);
     }
@@ -139,6 +141,7 @@ public class UserController {
      */
     @PutMapping("/update/status/{id}")
     @ApiOperation(value = "修改用户状态")
+    @SaCheckPermission(value = "permission:user:update",orRole = {"admin"})
     public ResultData updateUserStatus(@PathVariable("id") Integer id) throws SystemException {
         return userService.updateUserStatus(id);
     }
@@ -175,6 +178,7 @@ public class UserController {
     @PostMapping("/reset/pwd")
     @ApiOperation(value = "重置用户密码")
     @SaCheckRole("admin")
+    @SaCheckPermission(value = "permission:user:resetpwd",orRole = {"admin"})
     public ResultData resetPassword(@RequestBody @Valid ResetPwdUserDto userDto) throws SystemException {
         return userService.resetPassword(userDto);
     }
@@ -186,6 +190,7 @@ public class UserController {
      */
     @DeleteMapping("/delete/{id}")
     @ApiOperation(value = "删除用户")
+    @SaCheckPermission(value = "permission:user:delete",orRole = {"admin"})
     public ResultData deleteUser(@PathVariable("id") Integer id) throws SystemException {
         return userService.deleteUser(id);
     }

@@ -1,6 +1,7 @@
 package com.common.controller;
 
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.common.exception.SystemException;
 import com.common.model.dto.AddMenuDto;
 import com.common.model.dto.SearchRoleDto;
@@ -46,6 +47,7 @@ public class RoleController {
      */
     @GetMapping("/list/{pageNo}/{pageSize}")
     @ApiOperation(value = "分页查询角色数据")
+    @SaCheckPermission(value = "permission:role:list",orRole = {"admin","common","test"})
     public ResultData queryRoleListByPage(@PathVariable("pageNo") Integer pageNo,
                                           @PathVariable("pageSize") Integer pageSize,
                                           SearchRoleDto roleDto) {
@@ -72,6 +74,7 @@ public class RoleController {
      */
     @PostMapping("/add")
     @ApiOperation(value = "新增角色")
+    @SaCheckPermission(value = "permission:role:add",orRole = {"admin"})
     public ResultData saveRole(@RequestBody @Valid Role role) throws SystemException {
         return roleService.saveRole(role);
     }
@@ -83,6 +86,7 @@ public class RoleController {
      */
     @PostMapping("/save/permission/{roleId}")
     @ApiOperation(value = "角色分配权限")
+    @SaCheckPermission(value = "permission:role:assign",orRole = {"admin"})
     public ResultData savePermission(@PathVariable("roleId") Integer roleId,
                                @RequestBody List<Integer> menuIds) {
         roleService.savePermission(roleId,menuIds);
@@ -96,6 +100,7 @@ public class RoleController {
      */
     @PutMapping("/update")
     @ApiOperation(value = "修改角色")
+    @SaCheckPermission(value = "permission:role:update",orRole = {"admin"})
     public ResultData updateRole(@RequestBody @Valid Role role) throws SystemException {
         return roleService.updateRole(role);
     }
@@ -107,6 +112,7 @@ public class RoleController {
      */
     @PutMapping("/update/status/{id}")
     @ApiOperation(value = "修改角色状态")
+    @SaCheckPermission(value = "permission:role:update",orRole = {"admin"})
     public ResultData updateRoleStatus(@PathVariable("id") Integer id) throws SystemException {
         return roleService.updateRoleStatus(id);
     }
@@ -132,6 +138,7 @@ public class RoleController {
      */
     @DeleteMapping("/delete")
     @ApiOperation(value = "删除角色")
+    @SaCheckPermission(value = "permission:role:delete",orRole = {"admin"})
     public ResultData deleteRole(@RequestParam("id") Integer id) throws SystemException {
         return roleService.deleteRole(id);
     }

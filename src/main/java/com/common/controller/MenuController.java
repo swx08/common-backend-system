@@ -1,6 +1,8 @@
 package com.common.controller;
 
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
+import cn.dev33.satoken.annotation.SaCheckRole;
 import cn.hutool.core.lang.tree.Tree;
 import com.common.exception.SystemException;
 import com.common.model.dto.AddMenuDto;
@@ -46,6 +48,7 @@ public class MenuController {
      */
     @GetMapping("/list")
     @ApiOperation(value = "查询所有菜单数据")
+    @SaCheckPermission(value = "permission:menu:list",orRole = {"admin","common","test"})
     public ResultData queryMenuList() {
         List<Tree<String>> menuList = menuService.queryMenuList();
         return ResultData.success(menuList);
@@ -58,6 +61,7 @@ public class MenuController {
      */
     @GetMapping("/permission/list")
     @ApiOperation(value = "分配权限时获取菜单树形数据")
+    @SaCheckPermission(value = "permission:role:assign",orRole = {"admin"})
     public ResultData queryMenuListWithPermission() {
         List<Tree<String>> menuList = menuService.queryMenuListWithPermission();
         return ResultData.success(menuList);
@@ -70,6 +74,7 @@ public class MenuController {
      */
     @PostMapping("/list/like")
     @ApiOperation(value = "模糊查询菜单数据")
+    @SaCheckPermission(value = "permission:menu:query",orRole = {"admin","common","test"})
     public ResultData queryMenuListByLike(@RequestBody SearchMenuDto menuDto) {
         List<AddMenuDto> menuList = menuService.queryMenuListByLike(menuDto);
         return ResultData.success(menuList);
@@ -82,6 +87,7 @@ public class MenuController {
      */
     @GetMapping("/query/role/permissions")
     @ApiOperation(value = "查询角色的权限数据")
+    @SaCheckPermission(value = "permission:role:assign",orRole = {"admin"})
     public ResultData queryRoleMenuList(@RequestParam("id") Integer id) {
         List<String> menuIdList = menuService.queryButtonIdsByRoleId(id);
         return ResultData.success(menuIdList);
@@ -94,6 +100,7 @@ public class MenuController {
      */
     @PostMapping("/add")
     @ApiOperation(value = "新增菜单")
+    @SaCheckPermission(value = "permission:menu:add",orRole = {"admin"})
     public ResultData addMenu(@RequestBody AddMenuDto menu) throws SystemException {
         return menuService.addMenu(menu);
     }
@@ -105,6 +112,7 @@ public class MenuController {
      */
     @PutMapping("/update")
     @ApiOperation(value = "修改菜单")
+    @SaCheckPermission(value = "permission:menu:update",orRole = {"admin"})
     public ResultData updateMenu(@RequestBody AddMenuDto menu) throws SystemException {
         return menuService.updateMenu(menu);
     }
@@ -128,6 +136,7 @@ public class MenuController {
      */
     @DeleteMapping("/delete")
     @ApiOperation(value = "删除菜单")
+    @SaCheckPermission(value = "permission:menu:delete",orRole = {"admin"})
     public ResultData deleteMenu(@RequestParam("id") Integer id) throws SystemException {
         return menuService.deleteMenu(id);
     }
