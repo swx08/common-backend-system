@@ -12,6 +12,7 @@ package com.common.exception;
 
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.exception.NotPermissionException;
+import cn.dev33.satoken.exception.NotRoleException;
 import lombok.extern.slf4j.Slf4j;
 import com.common.response.ResponseCodeEnum;
 import com.common.response.ResultData;
@@ -81,6 +82,16 @@ public class GlobalExceptionHandler {
     public ResultData notPermissionException(HttpServletRequest request, NotPermissionException e){
         printLog(request,e);
         log.error("无此权限异常：{}",e.getMessage());
+        return ResultData.fail(ResponseCodeEnum.NO_PERMISSION);
+    }
+
+    /**
+     * sa-token：无此角色异常
+     */
+    @ExceptionHandler(NotRoleException.class)
+    public ResultData notRoleException(HttpServletRequest request, NotRoleException e){
+        printLog(request,e);
+        log.error("无此角色异常：{}",e.getMessage());
         return ResultData.fail(ResponseCodeEnum.NO_PERMISSION);
     }
 

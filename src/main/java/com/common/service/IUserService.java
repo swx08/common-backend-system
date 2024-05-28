@@ -84,4 +84,11 @@ public interface IUserService extends IService<User> {
      * @return
      */
     ResultData resetPassword(ResetPwdUserDto userDto) throws SystemException;
+
+    /**
+     * 获取用户角色标识
+     * @param userId
+     * @return
+     */
+    List<String> queryRoleCode(int userId);
 }

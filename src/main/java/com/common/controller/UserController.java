@@ -1,6 +1,7 @@
 package com.common.controller;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
+import cn.dev33.satoken.annotation.SaCheckRole;
 import cn.dev33.satoken.stp.StpUtil;
 import com.common.exception.SystemException;
 import com.common.model.dto.LoginUserDto;
@@ -94,13 +95,13 @@ public class UserController {
     }
 
     /**
-     * 获取用户角色数据
+     * 获取角色名称
      * @param userId
      * @return
      * @throws SystemException
      */
     @GetMapping("/roles/{userId}")
-    @ApiOperation(value = "获取用户角色数据")
+    @ApiOperation(value = "获取角色名称")
     public ResultData queryRoles(@PathVariable("userId") Integer userId) throws SystemException {
         List<String> roles = userService.queryRoles(userId);
         return ResultData.success(roles);
@@ -173,6 +174,7 @@ public class UserController {
      */
     @PostMapping("/reset/pwd")
     @ApiOperation(value = "重置用户密码")
+    @SaCheckRole("admin")
     public ResultData resetPassword(@RequestBody @Valid ResetPwdUserDto userDto) throws SystemException {
         return userService.resetPassword(userDto);
     }

@@ -44,7 +44,7 @@ public class PermissionImpl implements StpInterface {
         try {
             String userId = (String) loginId;
             Map<String, Object> userInfo = userService.getUserInfo(Integer.parseInt(userId));
-            // 获取用户角色列表
+            // 获取用户权限列表
             List<String> permissionList = (List<String>) userInfo.get("permissions");
             log.info("成功获取用户权限列表............");
             return permissionList;
@@ -63,6 +63,12 @@ public class PermissionImpl implements StpInterface {
      */
     @Override
     public List<String> getRoleList(Object loginId, String loginType) {
-        return null;
+        log.info("获取用户角色标识............");
+        // 返回角色标识
+        String userId = (String) loginId;
+        // 获取用户角色标识
+        List<String> roleList = userService.queryRoleCode(Integer.parseInt(userId));
+        log.info("成功获取用户角色标识............");
+        return roleList;
     }
 }

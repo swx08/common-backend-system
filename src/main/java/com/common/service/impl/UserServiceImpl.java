@@ -236,7 +236,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             List<Role> roleList = roleMapper.selectBatchIds(roleIds);
             return roleList.stream().map(Role::getName).collect(Collectors.toList());
         }
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
@@ -460,6 +460,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             log.error("用户{}的密码修改失败！",user.getUsername());
             return ResultData.fail(1019,"用户密码修改失败！");
         }
+    }
+
+    @Override
+    public List<String> queryRoleCode(int userId) {
+        QueryWrapper<UserRole> wrapper = new QueryWrapper<>();
+        wrapper.eq("user_id",userId);
+        List<UserRole> userRoles = userRoleMapper.selectList(wrapper);
+        if(!CollectionUtils.isEmpty(userRoles)){
+            List<Integer> roleIds = userRoles.stream().map(UserRole::getRoleId).collect(Collectors.toList());
+            List<Role> roleList = roleMapper.selectBatchIds(roleIds);
+            return roleList.stream().map(Role::getCode).collect(Collectors.toList());
+        }
+        return Collections.emptyList();
     }
 
     /**
