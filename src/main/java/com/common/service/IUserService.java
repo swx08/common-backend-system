@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.common.model.vo.EchoUserVo;
 import com.common.response.ResultData;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +30,7 @@ public interface IUserService extends IService<User> {
      */
     String login(LoginUserDto user) throws SystemException;
 
-    Map<String, Object> getUserInfo(Integer userId) throws SystemException;
+    Map<String, Object> getUserInfo(HttpServletRequest request) throws SystemException;
 
     /**
      * 分页查询用户数据
@@ -91,4 +92,11 @@ public interface IUserService extends IService<User> {
      * @return
      */
     List<String> queryRoleCode(int userId);
+
+    /**
+     * 获取用户权限列表
+     * @param userId
+     * @return
+     */
+    List<String> getUserPermissions(int userId) throws SystemException;
 }

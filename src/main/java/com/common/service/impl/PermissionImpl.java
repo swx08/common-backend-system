@@ -43,9 +43,8 @@ public class PermissionImpl implements StpInterface {
         // 返回权限列表
         try {
             String userId = (String) loginId;
-            Map<String, Object> userInfo = userService.getUserInfo(Integer.parseInt(userId));
             // 获取用户权限列表
-            List<String> permissionList = (List<String>) userInfo.get("permissions");
+            List<String> permissionList = userService.getUserPermissions(Integer.parseInt(userId));
             log.info("成功获取用户权限列表............");
             return permissionList;
         } catch (SystemException e) {

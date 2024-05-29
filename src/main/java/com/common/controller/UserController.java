@@ -3,6 +3,7 @@ package com.common.controller;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.dev33.satoken.annotation.SaCheckRole;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.http.HttpRequest;
 import com.common.exception.SystemException;
 import com.common.model.dto.LoginUserDto;
 import com.common.model.dto.RegisterUserDto;
@@ -22,6 +23,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
@@ -88,9 +90,8 @@ public class UserController {
      */
     @PostMapping("/info")
     @ApiOperation(value = "登录获取用户信息")
-    public ResultData userInfo(@RequestParam("token") String token) throws SystemException {
-        String userId = (String) StpUtil.getLoginIdByToken(token);
-        Map<String,Object> map = userService.getUserInfo(Integer.parseInt(userId));
+    public ResultData userInfo(HttpServletRequest request) throws SystemException {
+        Map<String,Object> map = userService.getUserInfo(request);
         return ResultData.success(map);
     }
 

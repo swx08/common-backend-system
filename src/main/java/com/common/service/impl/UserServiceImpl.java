@@ -28,6 +28,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -95,7 +96,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     @Override
-    public Map<String, Object> getUserInfo(Integer userId) throws SystemException {
+    public Map<String, Object> getUserInfo(HttpServletRequest request) throws SystemException {
+        //从请求头中获取token
+        String token = request.getHeader("Authorization");
+        if(StringUtils.isBlank(token)){
+            throw new SystemException(ResponseCodeEnum.NEED_LOGIN);
+        }
+        String userId = (String) StpUtil.getLoginIdByToken(token);
+        return queryCurrentUserInfo(Integer.parseInt(userId));
+    }
+
+    /**
+     * 查询当前用户权限消息
+     * @param userId
+     * @return
+     */
+    private Map<String, Object> queryCurrentUserInfo(Integer userId) throws SystemException {
         User user = baseMapper.selectById(userId);
         if(user == null){
             throw new SystemException(ResponseCodeEnum.USER_NOT_EXITS);
@@ -473,6 +489,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             return roleList.stream().map(Role::getCode).collect(Collectors.toList());
         }
         return Collections.emptyList();
+    }
+
+    @Override
+    public List<String> getUserPermissions(int userId) throws SystemException {
+        Map<String, Object> userInfo = queryCurrentUserInfo(userId);
+        return (List<String>) userInfo.get("permissions");
     }
 
     /**
