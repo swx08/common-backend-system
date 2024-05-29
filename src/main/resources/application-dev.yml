@@ -2,9 +2,9 @@ server:
   port: 9100
 
 mybatis-plus:
-  type-enums-package: org.common.enums
-#  configuration:
-#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  type-enums-package: com.common.enums
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 spring:
   mvc:
@@ -39,3 +39,16 @@ knife4j:
     enable: true
     username: admin
     password: admin
+
+
+#系统日志配置
+logging:
+  level:
+    open:
+      api:
+        controller: info
+  file:
+    name: D:\\logging\\${spring.application.name}.log
+  logback:
+    rollingpolicy:
+      max-file-size: 10MB

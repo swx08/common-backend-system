@@ -38,7 +38,7 @@ public class Knife4jConfig {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .description("通用后台系统管理接口文档")
-                .contact(new Contact("文学", "https://swx08.github.io/vuepress/", "2073958890@qq.com"))
+                .contact(new Contact("sixkey", "https://swx08.github.io/vuepress/", "2073958890@qq.com"))
                 .version("v1.1.0")
                 .title("通用后台系统管理接口文档")
                 .build();

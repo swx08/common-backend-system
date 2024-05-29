@@ -145,6 +145,6 @@
     </plugins>
 
     <!-- 固定Jar包名字 -->
-    <finalName>common-project</finalName>
+    <finalName>common-backend-permission</finalName>
   </build>
 </project>

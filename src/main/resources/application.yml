@@ -1,6 +1,6 @@
 spring:
   application:
-    name: common-project
+    name: common-backend-permission
   profiles:
-    active: dev
+    active: prod
 
