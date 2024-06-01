@@ -132,7 +132,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
                 return this.queryOtherInfo(user);
             }
         }
-        return null;
+        //其他角色的用户查询相应的菜单和按钮
+        return this.queryOtherInfo(user);
     }
 
     private boolean hasAdminPermission(List<Integer> roleIds) {
@@ -454,7 +455,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         BeanUtils.copyProperties(userDto,user);
         if(baseMapper.insert(user) > 0){
             log.info("用户{}注册成功！",userDto.getUsername());
-            //TODO:用户注册成功后，应该默认分配一个普通用户角色。
             return ResultData.success();
         }else {
             log.error("用户{}注册失败！",userDto.getUsername());
