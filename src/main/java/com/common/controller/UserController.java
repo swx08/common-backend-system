@@ -13,12 +13,14 @@ import com.common.model.entity.Role;
 import com.common.model.entity.User;
 import com.common.model.vo.EchoRoleVo;
 import com.common.model.vo.EchoUserVo;
+import com.common.response.ResponseCodeEnum;
 import com.common.response.ResultData;
 import com.common.service.IUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -166,7 +168,12 @@ public class UserController {
      */
     @PostMapping("/logout")
     @ApiOperation(value = "用户退出登录")
-    public ResultData logout(@RequestParam("token") String token) throws SystemException {
+    public ResultData logout(HttpServletRequest request) throws SystemException {
+        //从请求头中获取token
+        String token = request.getHeader("Authorization");
+        if(StringUtils.isBlank(token)){
+            throw new SystemException(ResponseCodeEnum.NEED_LOGIN);
+        }
         StpUtil.logoutByTokenValue(token);
         return ResultData.success();
     }

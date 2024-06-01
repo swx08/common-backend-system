@@ -37,6 +37,7 @@ public class LoginInterceptorConfig implements WebMvcConfigurer {
         List<String> patters = new ArrayList<>();
         patters.add("/user/login");
         patters.add("/user/register");
+        patters.add("/user/logout");
 
 
         //registry.addInterceptor(interceptor);完成拦截
