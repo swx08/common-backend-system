@@ -202,4 +202,20 @@ public class UserController {
     public ResultData deleteUser(@PathVariable("id") Integer id) throws SystemException {
         return userService.deleteUser(id);
     }
+
+    /**
+     * 批量删除用户
+     * @param
+     * @return
+     */
+    @DeleteMapping("/batch/delete/{ids}")
+    @ApiOperation(value = "批量删除用户")
+    @SaCheckPermission(value = "permission:user:delete",orRole = {"admin"})
+    public ResultData batchDeleteUser(@PathVariable("ids") List<Integer> ids) throws SystemException {
+        for (Integer id : ids) {
+            userService.deleteUser(id);
+        }
+        return ResultData.success();
+    }
+
 }

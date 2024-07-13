@@ -45,7 +45,8 @@ public enum ResponseCodeEnum {
     ROLE_NOT_EXITS(1025,"角色不存在！"),
     FAIL_DICT_TYPE_EXIST(1022, "字典类型已存在！"),
     FAIL_DICT_NAME_EXIST(1023, "字典名称已存在！"),
-    DICT_DATA_LABEL_REPEAT(1025, "标签以存在！");
+    DICT_DATA_LABEL_REPEAT(1025, "标签已存在！"),
+    DICT_DATA_VALUE_REPEAT(1026, "字典键值已存在！");
 
     /**
      * 响应码
