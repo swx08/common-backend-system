@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="474fd7ce-aec0-4392-b2cc-dfa4ca75158d" name="Changes" comment="新增字典管理功能模块">
+    <list default="true" id="474fd7ce-aec0-4392-b2cc-dfa4ca75158d" name="Changes" comment="新增字典功能开发完成">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/common/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/common/response/ResponseCodeEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/response/ResponseCodeEnum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/common/controller/RoleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/controller/RoleController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -137,7 +136,7 @@
       <workItem from="1720621085438" duration="5352000" />
       <workItem from="1720796580838" duration="6503000" />
       <workItem from="1720844614364" duration="3257000" />
-      <workItem from="1720852024094" duration="10256000" />
+      <workItem from="1720852024094" duration="12061000" />
     </task>
     <task id="LOCAL-00001" summary="删除菜单的同时删除角色菜单关联表数据">
       <option name="closed" value="true" />
@@ -355,7 +354,31 @@
       <option name="project" value="LOCAL" />
       <updated>1720854987315</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="新增字典功能开发完成">
+      <option name="closed" value="true" />
+      <created>1720876507450</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1720876507450</updated>
+    </task>
+    <task id="LOCAL-00029" summary="新增字典功能开发完成">
+      <option name="closed" value="true" />
+      <created>1720876556413</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1720876556413</updated>
+    </task>
+    <task id="LOCAL-00030" summary="新增字典功能开发完成">
+      <option name="closed" value="true" />
+      <created>1720876570793</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1720876570793</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -373,7 +396,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="删除菜单的同时删除角色菜单关联表数据" />
     <MESSAGE value="完善用户登录" />
     <MESSAGE value="用户管理--用户数据查询" />
     <MESSAGE value="用户管理--用户状态修改" />
@@ -397,7 +419,9 @@
     <MESSAGE value="修改用户退出登录接口" />
     <MESSAGE value="修复用户登录获取数据信息接口" />
     <MESSAGE value="新增字典管理功能模块" />
-    <option name="LAST_COMMIT_MESSAGE" value="新增字典管理功能模块" />
+    <MESSAGE value="字典管理功能开发完成" />
+    <MESSAGE value="新增字典功能开发完成" />
+    <option name="LAST_COMMIT_MESSAGE" value="新增字典功能开发完成" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

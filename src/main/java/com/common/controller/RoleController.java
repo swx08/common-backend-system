@@ -142,4 +142,19 @@ public class RoleController {
     public ResultData deleteRole(@RequestParam("id") Integer id) throws SystemException {
         return roleService.deleteRole(id);
     }
+
+    /**
+     * 批量删除角色
+     * @param
+     * @return
+     */
+    @DeleteMapping("/batch/delete/{ids}")
+    @ApiOperation(value = "批量删除角色")
+    @SaCheckPermission(value = "permission:role:delete",orRole = {"admin"})
+    public ResultData batchDeleteRole(@PathVariable("ids") List<Integer> ids) throws SystemException {
+        for (Integer id : ids) {
+            roleService.deleteRole(id);
+        }
+        return ResultData.success();
+    }
 }
