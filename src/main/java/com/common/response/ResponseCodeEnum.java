@@ -41,7 +41,11 @@ public enum ResponseCodeEnum {
     PHONE_EXITS(1015,"手机号已存在！"),
     EMAIL_EXITS(1016,"邮箱已存在！"),
     USER_FORBIDDEN(1018,"用户已被禁用，请联系管理员恢复！"),
-    ROLE_NOT_EXITS(1025,"角色不存在！");
+    PARAMETER_ERROR(1020,"参数错误！"),
+    ROLE_NOT_EXITS(1025,"角色不存在！"),
+    FAIL_DICT_TYPE_EXIST(1022, "字典类型已存在！"),
+    FAIL_DICT_NAME_EXIST(1023, "字典名称已存在！"),
+    DICT_DATA_LABEL_REPEAT(1025, "标签以存在！");
 
     /**
      * 响应码

@@ -54,6 +54,13 @@ public class ResultData<T> {
         this.data = data;
     }
 
+    public ResultData(ResponseCodeEnum responseCodeEnum,T data){
+        this();
+        this.code = responseCodeEnum.getCode();
+        this.message = responseCodeEnum.getMessage();
+        this.data = data;
+    }
+
     public ResultData(ResponseCodeEnum responseCodeEnum){
         this();
         this.code = responseCodeEnum.getCode();
@@ -94,6 +101,15 @@ public class ResultData<T> {
      */
     public static <T> ResultData<T> fail(){
         return new ResultData<>(ResponseCodeEnum.FAIL);
+    }
+
+    /**
+     * 失败返回
+     * @return
+     * @param <T>
+     */
+    public static <T> ResultData<T> fail(ResponseCodeEnum responseCodeEnum,T data){
+        return new ResultData<>(responseCodeEnum,data);
     }
 
     /**

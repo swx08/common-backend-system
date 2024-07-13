@@ -1,3 +1,13 @@
+POST http://localhost:9100/dict/type/add
+Content-Length: 0
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-07-11T000903.200.json
+
+###
+
 GET http://localhost:9100/user/roles/1
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)

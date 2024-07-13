@@ -4,9 +4,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="474fd7ce-aec0-4392-b2cc-dfa4ca75158d" name="Changes" comment="修改用户退出登录接口">
+    <list default="true" id="474fd7ce-aec0-4392-b2cc-dfa4ca75158d" name="Changes" comment="修复用户登录获取数据信息接口">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/common/model/dto/DictDataAddDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/common/model/dto/DictDataSearchDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/common/model/dto/DictTypeAddDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/common/model/dto/DictTypeSearchDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/common/model/enums/DictStatusEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/common/model/vo/DictDataEchoVo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/common/model/vo/DictDataListVo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/common/model/vo/DictTypeEchoVo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/common/model/vo/DictTypeListVo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/JavaSceneConfigState.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/JavaSceneConfigState.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/http-client.cookies" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/httpRequests/http-client.cookies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/common/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/service/impl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/common/config/interceptor/LoginInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/config/interceptor/LoginInterceptor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/common/config/interceptor/LoginInterceptorConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/config/interceptor/LoginInterceptorConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/common/exception/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/common/response/ResponseCodeEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/response/ResponseCodeEnum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/common/response/ResultData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/response/ResultData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-dev.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application-prod.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-prod.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,8 +88,8 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.common.model.dto" />
       <recent name="com.common.model.vo" />
+      <recent name="com.common.model.dto" />
       <recent name="com.common.model.enums" />
     </key>
   </component>
@@ -84,10 +103,10 @@
     <configuration name="generated-requests | #3" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="3" requestIdentifier="#3" runType="Run single request">
       <method v="2" />
     </configuration>
-    <configuration name="generated-requests | #4" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="4" requestIdentifier="#4" runType="Run single request">
+    <configuration name="generated-requests | #5" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="5" requestIdentifier="#5" runType="Run single request">
       <method v="2" />
     </configuration>
-    <configuration name="generated-requests | #5" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="5" requestIdentifier="#5" runType="Run single request">
+    <configuration name="generated-requests | #8" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="8" requestIdentifier="#8" runType="Run single request">
       <method v="2" />
     </configuration>
     <configuration name="BackendCommonApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
@@ -99,11 +118,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="HTTP Request.generated-requests | #8" />
         <item itemvalue="HTTP Request.generated-requests | #1" />
         <item itemvalue="HTTP Request.generated-requests | #2" />
         <item itemvalue="HTTP Request.generated-requests | #3" />
         <item itemvalue="HTTP Request.generated-requests | #5" />
-        <item itemvalue="HTTP Request.generated-requests | #4" />
       </list>
     </recent_temporary>
   </component>
@@ -129,7 +148,14 @@
       <workItem from="1717085962917" duration="672000" />
       <workItem from="1717155753316" duration="1334000" />
       <workItem from="1717205806277" duration="7391000" />
-      <workItem from="1717246374763" duration="1986000" />
+      <workItem from="1717246374763" duration="4791000" />
+      <workItem from="1718810437163" duration="811000" />
+      <workItem from="1719207585597" duration="1534000" />
+      <workItem from="1719750578918" duration="1043000" />
+      <workItem from="1720621085438" duration="5352000" />
+      <workItem from="1720796580838" duration="6503000" />
+      <workItem from="1720844614364" duration="3257000" />
+      <workItem from="1720852024094" duration="2739000" />
     </task>
     <task id="LOCAL-00001" summary="删除菜单的同时删除角色菜单关联表数据">
       <option name="closed" value="true" />
@@ -331,7 +357,15 @@
       <option name="project" value="LOCAL" />
       <updated>1717212932395</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="修复用户登录获取数据信息接口">
+      <option name="closed" value="true" />
+      <created>1717255684266</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1717255684266</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -371,7 +405,8 @@
     <MESSAGE value="通用权限管理系统开发完毕" />
     <MESSAGE value="修改用户登录获取消息接口" />
     <MESSAGE value="修改用户退出登录接口" />
-    <option name="LAST_COMMIT_MESSAGE" value="修改用户退出登录接口" />
+    <MESSAGE value="修复用户登录获取数据信息接口" />
+    <option name="LAST_COMMIT_MESSAGE" value="修复用户登录获取数据信息接口" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

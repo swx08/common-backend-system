@@ -16,12 +16,17 @@ import cn.dev33.satoken.exception.NotRoleException;
 import lombok.extern.slf4j.Slf4j;
 import com.common.response.ResponseCodeEnum;
 import com.common.response.ResultData;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 全局异常处理器
@@ -52,7 +57,13 @@ public class GlobalExceptionHandler {
     public ResultData validExceptionHandler(HttpServletRequest request, MethodArgumentNotValidException e){
         log.info("参数未传异常：",e);
         printLog(request,e);
-        return ResultData.fail(ResponseCodeEnum.FAIL.getCode(),e.getBindingResult().getAllErrors().get(0).getDefaultMessage());
+        Map<String,String> map = new HashMap<String,String>();
+        BindingResult bindingResult = e.getBindingResult();
+        List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+        fieldErrors.forEach(fieldError -> {
+            map.put(fieldError.getField(),fieldError.getDefaultMessage());
+        });
+        return ResultData.fail(ResponseCodeEnum.PARAMETER_ERROR,map);
     }
 
     /**
