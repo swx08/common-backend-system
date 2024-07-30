@@ -55,6 +55,19 @@ public class MenuController {
     }
 
     /**
+     * 适配primeVue ui框架的树形菜单数据
+     * @param
+     * @return
+     */
+    @GetMapping("/primeVue/list")
+    @ApiOperation(value = "查询所有菜单数据")
+    @SaCheckPermission(value = "permission:menu:list",orRole = {"admin","common","test"})
+    public ResultData queryMenuListWithPrimeVue() {
+        List<Tree<String>> menuList = menuService.queryMenuListWithPrimeVue();
+        return ResultData.success(menuList);
+    }
+
+    /**
      * 分配权限时获取菜单树形数据
      * @param
      * @return

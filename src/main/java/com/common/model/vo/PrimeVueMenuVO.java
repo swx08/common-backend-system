@@ -1,4 +1,4 @@
-package com.common.model.dto;
+package com.common.model.vo;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -8,8 +8,6 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -26,19 +24,16 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterUserDto implements Serializable {
+public class PrimeVueMenuVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @NotBlank(message = "用户名不能为空")
-    private String username;
-
-    @NotBlank(message = "密码不能为空")
-    private String password;
-
-    @NotBlank(message = "手机号不能为空")
-    private String phone;
-
-    @NotBlank(message = "邮箱不能为空")
-    private String email;
+    private Integer id;
+    private Integer parentId;
+    private Integer type;
+    private String name;
+    private String title;
+    private String permission;
+    private String component;
+    private Integer status;
 }

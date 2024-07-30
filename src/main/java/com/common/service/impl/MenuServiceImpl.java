@@ -12,6 +12,7 @@ import com.common.model.entity.Menu;
 import com.common.model.entity.Role;
 import com.common.model.enums.MenuStatusEnum;
 import com.common.model.enums.MenuTypeEnum;
+import com.common.model.vo.PrimeVueMenuVO;
 import com.common.response.ResponseCodeEnum;
 import com.common.response.ResultData;
 import com.common.service.IMenuService;
@@ -71,6 +72,32 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
 
     private List<Tree<String>> buildTree(List<Menu> menusList, TreeNodeConfig treeNodeConfig) {
         return TreeUtil.build(menusList, "0", treeNodeConfig, this::populateTreeNode);
+    }
+
+    private List<Tree<String>> buildTreeWithPrimeVue(List<Menu> menusList, TreeNodeConfig treeNodeConfig) {
+        return TreeUtil.build(menusList, "0", treeNodeConfig, this::populateTreeNodeWithPrimeVue);
+    }
+
+    private void populateTreeNodeWithPrimeVue(Menu treeNode, Tree<String> tree) {
+        // 避免空指针，进行必要的空检查
+        String id = Optional.ofNullable(treeNode.getId()).map(Object::toString).orElse(null);
+        String parentId = Optional.ofNullable(treeNode.getParentId()).map(Object::toString).orElse(null);
+
+        tree.setId(id);
+        tree.setParentId(parentId);
+
+        // 扩展属性 ...
+        tree.putExtra("key", id);
+        PrimeVueMenuVO menuVO = new PrimeVueMenuVO();
+        menuVO.setId(Integer.parseInt(id));
+        menuVO.setParentId(Integer.parseInt(parentId));
+        menuVO.setName(treeNode.getName());
+        menuVO.setTitle(treeNode.getTitle());
+        menuVO.setPermission(treeNode.getPermission());
+        menuVO.setType(treeNode.getType());
+        menuVO.setStatus(treeNode.getStatus());
+        menuVO.setComponent(treeNode.getComponent());
+        tree.putExtra("data", menuVO);
     }
 
     private void populateTreeNode(Menu treeNode, Tree<String> tree) {
@@ -251,6 +278,20 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
         // 最大递归深度
         treeNodeConfig.setDeep(3);
         List<Tree<String>> treeNodes = buildTreeWithPermission(menusList, treeNodeConfig);
+        return treeNodes;
+    }
+
+    @Override
+    public List<Tree<String>> queryMenuListWithPrimeVue() {
+        //查询菜单数据
+        log.info("查询菜单数据...");
+        QueryWrapper<Menu> wrapper = new QueryWrapper<>();
+        wrapper.orderByDesc("create_time");
+        List<Menu> menusList = baseMapper.selectList(wrapper);
+        TreeNodeConfig treeNodeConfig = new TreeNodeConfig();
+        // 最大递归深度
+        treeNodeConfig.setDeep(3);
+        List<Tree<String>> treeNodes = buildTreeWithPrimeVue(menusList, treeNodeConfig);
         return treeNodes;
     }
 

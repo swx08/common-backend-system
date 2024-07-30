@@ -69,4 +69,6 @@ public interface IMenuService extends IService<Menu> {
      * @return
      */
     List<Tree<String>> queryMenuListWithPermission();
+
+    List<Tree<String>> queryMenuListWithPrimeVue();
 }
