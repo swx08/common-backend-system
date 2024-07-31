@@ -7,9 +7,11 @@ import com.common.model.dto.SearchMenuDto;
 import com.common.model.entity.Menu;
 import com.common.model.entity.Role;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.common.model.vo.PrimeVueMenuVO;
 import com.common.response.ResultData;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -71,4 +73,11 @@ public interface IMenuService extends IService<Menu> {
     List<Tree<String>> queryMenuListWithPermission();
 
     List<Tree<String>> queryMenuListWithPrimeVue();
+
+    /**
+     * 模糊查询菜单数据(primeVue框架)
+     * @param menuDto
+     * @return
+     */
+    List<Map<String,Object>> queryMenuListByLikeWithPrimeVue(SearchMenuDto menuDto);
 }

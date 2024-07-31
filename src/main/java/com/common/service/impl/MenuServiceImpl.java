@@ -30,10 +30,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -293,6 +290,35 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
         treeNodeConfig.setDeep(3);
         List<Tree<String>> treeNodes = buildTreeWithPrimeVue(menusList, treeNodeConfig);
         return treeNodes;
+    }
+
+    @Override
+    public List<Map<String,Object>> queryMenuListByLikeWithPrimeVue(SearchMenuDto menuDto) {
+        // 查询菜单数据
+        log.info("模糊查询菜单数据...");
+        QueryWrapper<Menu> wrapper = new QueryWrapper<>();
+        String title = menuDto.getTitle();
+        // 模糊查询，增加对title为空的防御性处理
+        if (!StringUtils.isBlank(title)) {
+            wrapper.like("title", title.trim());
+        }
+        wrapper.eq(null != menuDto.getType(), "type", menuDto.getType());
+        wrapper.eq(null != menuDto.getStatus(), "status", menuDto.getStatus());
+        List<Menu> menuList = baseMapper.selectList(wrapper);
+        List<Map<String,Object>> result = new ArrayList<Map<String,Object>>();
+        if (!CollectionUtils.isEmpty(menuList)) {
+            menuList.forEach(menu -> {
+                PrimeVueMenuVO menuVO = new PrimeVueMenuVO();
+                BeanUtils.copyProperties(menu, menuVO);
+                Map<String,Object> map = new HashMap<String,Object>();
+                map.put("key", menu.getId());
+                map.put("data",menuVO);
+                result.add(map);
+            });
+            return result;
+        } else {
+            return Collections.emptyList();
+        }
     }
 
     private List<Tree<String>> buildTreeWithPermission(List<Menu> menusList, TreeNodeConfig treeNodeConfig) {

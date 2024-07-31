@@ -9,6 +9,7 @@ import com.common.model.dto.AddMenuDto;
 import com.common.model.dto.SearchMenuDto;
 import com.common.model.entity.Menu;
 import com.common.model.entity.Role;
+import com.common.model.vo.PrimeVueMenuVO;
 import com.common.response.ResultData;
 import com.common.service.IMenuService;
 import io.swagger.annotations.Api;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -60,7 +62,7 @@ public class MenuController {
      * @return
      */
     @GetMapping("/primeVue/list")
-    @ApiOperation(value = "查询所有菜单数据")
+    @ApiOperation(value = "查询所有菜单数据(primeVue框架)")
     @SaCheckPermission(value = "permission:menu:list",orRole = {"admin","common","test"})
     public ResultData queryMenuListWithPrimeVue() {
         List<Tree<String>> menuList = menuService.queryMenuListWithPrimeVue();
@@ -90,6 +92,19 @@ public class MenuController {
     @SaCheckPermission(value = "permission:menu:query",orRole = {"admin","common","test"})
     public ResultData queryMenuListByLike(@RequestBody SearchMenuDto menuDto) {
         List<AddMenuDto> menuList = menuService.queryMenuListByLike(menuDto);
+        return ResultData.success(menuList);
+    }
+
+    /**
+     * 适配primeVue ui框架的模糊查询菜单数据
+     * @param
+     * @return
+     */
+    @PostMapping("/primeVue/list/like")
+    @ApiOperation(value = "模糊查询菜单数据(primeVue框架)")
+    @SaCheckPermission(value = "permission:menu:query",orRole = {"admin","common","test"})
+    public ResultData queryMenuListByLikeWithPrimeVue(@RequestBody SearchMenuDto menuDto) {
+        List<Map<String,Object>> menuList = menuService.queryMenuListByLikeWithPrimeVue(menuDto);
         return ResultData.success(menuList);
     }
 
