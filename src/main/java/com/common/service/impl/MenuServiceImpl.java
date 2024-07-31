@@ -85,6 +85,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
 
         // 扩展属性 ...
         tree.putExtra("key", id);
+        tree.putExtra("label", treeNode.getTitle());
         PrimeVueMenuVO menuVO = new PrimeVueMenuVO();
         menuVO.setId(Integer.parseInt(id));
         menuVO.setParentId(Integer.parseInt(parentId));
@@ -319,6 +320,32 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
         } else {
             return Collections.emptyList();
         }
+    }
+
+    @Override
+    public List<String> queryButtonIdsByRoleIdWithPrimeVue(Integer id) {
+        if (id == null) {
+            return Collections.emptyList();
+        }
+
+        QueryWrapper<RoleMenu> wrapper = new QueryWrapper<>();
+        wrapper.eq("role_id", id);
+
+        // 检查Mapper是否为null，避免空指针异常
+        if (roleMenuMapper == null || baseMapper == null) {
+            return Collections.emptyList();
+        }
+
+        List<RoleMenu> roleMenus = roleMenuMapper.selectList(wrapper);
+        if (!CollectionUtils.isEmpty(roleMenus)) {
+            List<Integer> menuIdList = roleMenus.stream().map(RoleMenu::getMenuId).collect(Collectors.toList());
+
+            //将menuIds转为String类型
+            return menuIdList.stream().map(String::valueOf).collect(Collectors.toList());
+
+        }
+
+        return Collections.emptyList();
     }
 
     private List<Tree<String>> buildTreeWithPermission(List<Menu> menusList, TreeNodeConfig treeNodeConfig) {

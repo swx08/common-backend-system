@@ -80,4 +80,11 @@ public interface IMenuService extends IService<Menu> {
      * @return
      */
     List<Map<String,Object>> queryMenuListByLikeWithPrimeVue(SearchMenuDto menuDto);
+
+    /**
+     *  查询当前角色所拥有的所有的菜单以及按钮权限（适配primeVue ui框架）
+     * @param id
+     * @return
+     */
+    List<String> queryButtonIdsByRoleIdWithPrimeVue(Integer id);
 }

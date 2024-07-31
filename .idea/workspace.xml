@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="474fd7ce-aec0-4392-b2cc-dfa4ca75158d" name="Changes" comment="新增树形数据结构返回--适配primeVue UI框架的树形展示结构">
+    <list default="true" id="474fd7ce-aec0-4392-b2cc-dfa4ca75158d" name="Changes" comment="新增模糊查询数据返回--适配primeVue UI框架的菜单模糊查询数据展示结构">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/common/controller/MenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/controller/MenuController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/common/service/IMenuService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/service/IMenuService.java" afterDir="false" />
@@ -142,7 +142,7 @@
       <workItem from="1722130752895" duration="1454000" />
       <workItem from="1722220227756" duration="7925000" />
       <workItem from="1722304998809" duration="13953000" />
-      <workItem from="1722391462535" duration="940000" />
+      <workItem from="1722391462535" duration="13032000" />
     </task>
     <task id="LOCAL-00001" summary="删除菜单的同时删除角色菜单关联表数据">
       <option name="closed" value="true" />
@@ -408,7 +408,15 @@
       <option name="project" value="LOCAL" />
       <updated>1722360045651</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="新增模糊查询数据返回--适配primeVue UI框架的菜单模糊查询数据展示结构">
+      <option name="closed" value="true" />
+      <created>1722393592079</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1722393592079</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -426,7 +434,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="用户管理--用户数据回显" />
     <MESSAGE value="用户管理--用户数据修改" />
     <MESSAGE value="用户管理--用户数据删除" />
     <MESSAGE value="用户管理--管理员用户状态无权修改" />
@@ -451,7 +458,8 @@
     <MESSAGE value="新增批量删除功能" />
     <MESSAGE value="新增字典管理数据" />
     <MESSAGE value="新增树形数据结构返回--适配primeVue UI框架的树形展示结构" />
-    <option name="LAST_COMMIT_MESSAGE" value="新增树形数据结构返回--适配primeVue UI框架的树形展示结构" />
+    <MESSAGE value="新增模糊查询数据返回--适配primeVue UI框架的菜单模糊查询数据展示结构" />
+    <option name="LAST_COMMIT_MESSAGE" value="新增模糊查询数据返回--适配primeVue UI框架的菜单模糊查询数据展示结构" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

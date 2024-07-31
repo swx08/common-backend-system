@@ -122,6 +122,19 @@ public class MenuController {
     }
 
     /**
+     * 查询当前角色所拥有的所有的菜单以及按钮权限（适配primeVue ui框架）
+     * @param
+     * @return
+     */
+    @GetMapping("/primeVue/query/role/permissions")
+    @ApiOperation(value = "查询角色的权限数据（适配primeVue ui框架）")
+    @SaCheckPermission(value = "permission:role:assign",orRole = {"admin"})
+    public ResultData queryRoleMenuListWithPrimeVue(@RequestParam("id") Integer id) {
+        List<String> menuIdList = menuService.queryButtonIdsByRoleIdWithPrimeVue(id);
+        return ResultData.success(menuIdList);
+    }
+
+    /**
      * 新增菜单
      * @param
      * @return
