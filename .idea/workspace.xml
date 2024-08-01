@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="474fd7ce-aec0-4392-b2cc-dfa4ca75158d" name="Changes" comment="新增模糊查询数据返回--适配primeVue UI框架的菜单模糊查询数据展示结构">
+    <list default="true" id="474fd7ce-aec0-4392-b2cc-dfa4ca75158d" name="Changes" comment="新增根据角色id查询角色的权限数据接口--适配primeVue UI框架的数据结构要求">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/common/controller/MenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/controller/MenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/common/service/IMenuService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/service/IMenuService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/common/service/impl/MenuServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/service/impl/MenuServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/common/service/impl/RoleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/common/service/impl/RoleServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -142,7 +140,8 @@
       <workItem from="1722130752895" duration="1454000" />
       <workItem from="1722220227756" duration="7925000" />
       <workItem from="1722304998809" duration="13953000" />
-      <workItem from="1722391462535" duration="13032000" />
+      <workItem from="1722391462535" duration="13999000" />
+      <workItem from="1722471996464" duration="2332000" />
     </task>
     <task id="LOCAL-00001" summary="删除菜单的同时删除角色菜单关联表数据">
       <option name="closed" value="true" />
@@ -416,7 +415,15 @@
       <option name="project" value="LOCAL" />
       <updated>1722393592079</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="新增根据角色id查询角色的权限数据接口--适配primeVue UI框架的数据结构要求">
+      <option name="closed" value="true" />
+      <created>1722446825316</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1722446825316</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -434,7 +441,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="用户管理--用户数据修改" />
     <MESSAGE value="用户管理--用户数据删除" />
     <MESSAGE value="用户管理--管理员用户状态无权修改" />
     <MESSAGE value="用户管理--完善用户登录逻辑" />
@@ -459,7 +465,8 @@
     <MESSAGE value="新增字典管理数据" />
     <MESSAGE value="新增树形数据结构返回--适配primeVue UI框架的树形展示结构" />
     <MESSAGE value="新增模糊查询数据返回--适配primeVue UI框架的菜单模糊查询数据展示结构" />
-    <option name="LAST_COMMIT_MESSAGE" value="新增模糊查询数据返回--适配primeVue UI框架的菜单模糊查询数据展示结构" />
+    <MESSAGE value="新增根据角色id查询角色的权限数据接口--适配primeVue UI框架的数据结构要求" />
+    <option name="LAST_COMMIT_MESSAGE" value="新增根据角色id查询角色的权限数据接口--适配primeVue UI框架的数据结构要求" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

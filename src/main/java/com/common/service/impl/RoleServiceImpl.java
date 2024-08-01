@@ -134,14 +134,8 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
         String roleName = role.getName();
         log.info("正在新增{}角色...", roleName);
 
-        // 角色名称唯一性检查
-        QueryWrapper<Role> wrapperName = new QueryWrapper<>();
-        wrapperName.eq("name", roleName);
-        Role selectOne = baseMapper.selectOne(wrapperName);
-        if (null != selectOne) {
-            log.error("角色名称{}已存在，新增失败...", roleName);
-            throw new SystemException(ResponseCodeEnum.ROLE_NAME_EXITS);
-        }
+        // 角色名称和标识唯一性检查
+        verifyRoleNameAndCodeUnique(role);
 
         // 新增角色
         if(baseMapper.insert(role) > 0){
@@ -150,6 +144,26 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
         }else{
             log.error("角色{}新增失败...", roleName);
             return ResultData.fail(1023, "角色新增失败！");
+        }
+    }
+
+    private void verifyRoleNameAndCodeUnique(Role role) throws SystemException {
+        // 角色名称唯一性检查
+        QueryWrapper<Role> wrapperName = new QueryWrapper<>();
+        wrapperName.eq("name", role.getName());
+        Role selectOne = baseMapper.selectOne(wrapperName);
+        if (null != selectOne) {
+            log.error("角色名称{}已存在，新增失败...", role.getName());
+            throw new SystemException(ResponseCodeEnum.ROLE_NAME_EXITS);
+        }
+
+        // 角色标识唯一性检查
+        wrapperName.clear();
+        wrapperName.eq("code", role.getCode());
+        selectOne = baseMapper.selectOne(wrapperName);
+        if (null != selectOne) {
+            log.error("角色标识{}已存在，新增失败...", role.getCode());
+            throw new SystemException(ResponseCodeEnum.ROLE_CODE_EXITS);
         }
     }
 
@@ -165,17 +179,8 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
 
         log.info("正在修改{}角色...", oldRole.getName());
 
-        // 角色名称和标识唯一性检查
-        QueryWrapper<Role> wrapper = new QueryWrapper<>();
-        wrapper.eq("name", role.getName());
-        // 排除自身
-        wrapper.ne("id", oldRole.getId());
-        Role selectOne = baseMapper.selectOne(wrapper);
-
-        if (selectOne != null) {
-            log.error("角色名称{}已存在，修改失败...", role.getName());
-            throw new SystemException(ResponseCodeEnum.ROLE_NAME_EXITS);
-        }
+        // 角色名称唯一性和标识唯一性检查
+        verifyRoleNameAndCodeUniqueWithUpdate(oldRole,role);
 
         // 修改角色信息
         BeanUtils.copyProperties(role, oldRole);
@@ -190,6 +195,28 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
         }
     }
 
+    private void verifyRoleNameAndCodeUniqueWithUpdate(Role oldRole,Role role) throws SystemException {
+        QueryWrapper<Role> wrapper = new QueryWrapper<>();
+        wrapper.eq("name", role.getName());
+        // 排除自身
+        wrapper.ne("id", oldRole.getId());
+        Role selectOne = baseMapper.selectOne(wrapper);
+        if (selectOne != null) {
+            log.error("角色名称{}已存在，修改失败...", role.getName());
+            throw new SystemException(ResponseCodeEnum.ROLE_NAME_EXITS);
+        }
+
+        // 角色标识唯一性检查
+        wrapper.clear();
+        wrapper.eq("code", role.getCode());
+        // 排除自身
+        wrapper.ne("id", oldRole.getId());
+        selectOne = baseMapper.selectOne(wrapper);
+        if (selectOne != null) {
+            log.error("角色标识{}已存在，修改失败...", role.getCode());
+            throw new SystemException(ResponseCodeEnum.ROLE_CODE_EXITS);
+        }
+    }
 
 
     @Override
